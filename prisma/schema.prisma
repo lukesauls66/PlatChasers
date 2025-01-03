@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  firstName String @db.Char(50)
+  lastName String @db.Char(50)
+  email String @db.VarChar(100) @unique
+  username String @db.Char(100) @unique
+  password String @db.VarChar(100)
+  games Game[]
+}
+
+model Game {
+  id Int @id @default(autoincrement())
+  title String @db.Char(100)
+  description String @db.Char(255)
+  gamePostsNum Int
+  image String
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  gamePosts GamePost[]
+  achievements Achievement[]
+}
+
+model GamePost {
+  id Int @id @default(autoincrement())
+  body String @db.VarChar(2000)
+  likes Int
+  dislikes Int
+  gameId Int
+  game Game @relation(fields: [gameId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Achievement {
+  id Int @id @default(autoincrement())
+  title String @db.Char(100)
+  description String @db.Char(255)
+  achievementPostsNum Int
+  image String
+  gameId Int
+  game Game @relation(fields: [gameId], references: [id])
+  achievementPosts AchievementPost[]
+}
+
+model AchievementPost {
+  id Int @id @default(autoincrement())
+  body String @db.VarChar(2000)
+  likes Int
+  dislikes Int
+  achievementId Int
+  achievement Achievement @relation(fields: [achievementId], references: [id])
+  createdAt DateTime @default(now())
+}
+
