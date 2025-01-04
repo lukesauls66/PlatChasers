@@ -1,18 +1,8 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+// import localFont from "next/font/local";
 import Template from "@/components/Template";
 import "./globals.css";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "PlatChasers",
@@ -26,10 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Template>{children}</Template>
+      <body>
+        <SessionProvider>
+          <Template>{children}</Template>
+        </SessionProvider>
       </body>
     </html>
   );

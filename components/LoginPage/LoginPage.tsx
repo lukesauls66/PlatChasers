@@ -1,7 +1,9 @@
 "use client";
 
+import LogIn from "./LogIn";
+
 const LoginPage: React.FC = () => {
-  return <h1>Login</h1>;
+  return <LogIn />;
 };
 
 export default LoginPage;

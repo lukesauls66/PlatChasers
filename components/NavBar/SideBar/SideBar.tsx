@@ -1,11 +1,18 @@
 "use client";
 
+import { useSession } from "next-auth/react";
+
+import LogoutButton from "./LogoutButton";
+
 interface SidebarProps {
   isOpen: boolean;
   toggleSidebar: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
+  const { data: session, status } = useSession();
+  console.log("user: ", session?.user);
+
   return (
     <div>
       <div
@@ -13,14 +20,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           isOpen ? "transform translate-x-0" : "transform translate-x-full"
         } w-[140px] md:w-[280px] p-4 z-40`}
       >
-        <ul className="flex flex-col gap-[1.5rem] p-[1rem]">
-          <li className="flex justify-center">
-            <a href="/login">Login</a>
-          </li>
-          <li className="flex justify-center">
-            <a href="/signup">Signup</a>
-          </li>
-        </ul>
+        {status === "authenticated" ? (
+          <div>
+            <p>{session?.user?.name}</p>
+            <LogoutButton />
+          </div>
+        ) : (
+          <ul className="flex flex-col gap-[1.5rem] p-[1rem]">
+            <li className="flex justify-center">
+              <a href="/api/login">Login</a>
+            </li>
+            <li className="flex justify-center">
+              <a href="/api/signup">Signup</a>
+            </li>
+          </ul>
+        )}
       </div>
       {isOpen && (
         <div
