@@ -1,6 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
+import { useVariant } from "@/context/Variant";
 import LogoutButton from "./LogoutButton";
 
 interface SidebarProps {
@@ -11,6 +12,8 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
   const { data: session, status } = useSession();
   console.log("user: ", session?.user);
+
+  const { setVariant } = useVariant();
 
   return (
     <div>
@@ -25,14 +28,24 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
             <LogoutButton />
           </div>
         ) : (
-          <ul className="flex flex-col gap-[1.5rem] p-[1rem]">
-            <li className="flex justify-center">
-              <a href="/login">Login</a>
-            </li>
-            <li className="flex justify-center">
-              <a href="/signup">Signup</a>
-            </li>
-          </ul>
+          <div className="flex flex-col gap-[1.5rem] p-[1rem]">
+            <button
+              onClick={() => {
+                toggleSidebar();
+                setVariant("login");
+              }}
+            >
+              Login
+            </button>
+            <button
+              onClick={() => {
+                toggleSidebar();
+                setVariant("register");
+              }}
+            >
+              Register
+            </button>
+          </div>
         )}
       </div>
       {isOpen && (

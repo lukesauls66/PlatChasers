@@ -13,108 +13,107 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  firstName String
-  lastName String
-  image String?
-  email String? @unique
-  username String? @unique
-  hashedPassword String?
-  underReview Boolean @default(false)
-  isAdmin Boolean @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  games Game[] @relation("FavoriteGames")
-  sessions Session[]
-  accounts Account[]
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  firstName      String
+  lastName       String
+  image          String?
+  email          String   @unique
+  username       String   @unique
+  hashedPassword String
+  underReview    Boolean   @default(false)
+  isAdmin        Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  games          Game[]    @relation("FavoriteGames")
+  sessions       Session[]
+  accounts       Account[]
 }
 
 model Account {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @db.ObjectId
-  type String
-  provider String
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
   providerAccountId String
-  refresh_token String? @db.String
-  access_token String? @db.String
-  expires_at Int?
-  token_type String?
-  scope String?
-  id_token String @db.String
-  session_state String?
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String  @db.String
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@unique([provider, providerAccountId])
 }
 
 model Session {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  sessionToken String @unique
-  userId String @db.ObjectId
-  expires DateTime
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   indentifier String
-  token String @unique
-  expires DateTime
+  token       String   @unique
+  expires     DateTime
 
   @@unique([indentifier, token])
 }
 
 model Game {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-  description String
+  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  description  String
   gamePostsNum Int
-  image String
-  isCompleted Boolean @default(false)
-  userId String @db.ObjectId
-  gamePosts GamePost[]
+  image        String
+  isCompleted  Boolean       @default(false)
+  userId       String        @db.ObjectId
+  gamePosts    GamePost[]
   achievements Achievement[]
 
   user User @relation("FavoriteGames", fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model GamePost {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  body String
-  likes Int @default(0)
-  dislikes Int @default(0)
-  private Boolean @default(false)
-  gameId String @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  body      String
+  likes     Int      @default(0)
+  dislikes  Int      @default(0)
+  private   Boolean  @default(false)
+  gameId    String   @db.ObjectId
   createdAt DateTime @default(now())
 
   game Game @relation(fields: [gameId], references: [id])
 }
 
 model Achievement {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  title String 
-  description String 
+  id                  String            @id @default(auto()) @map("_id") @db.ObjectId
+  title               String
+  description         String
   achievementPostsNum Int
-  image String
-  isUnlocked Boolean @default(false)
-  gameId String @db.ObjectId
-  achievementPosts AchievementPost[]
+  image               String
+  isUnlocked          Boolean           @default(false)
+  gameId              String            @db.ObjectId
+  achievementPosts    AchievementPost[]
 
   game Game @relation(fields: [gameId], references: [id])
 }
 
 model AchievementPost {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  body String 
-  likes Int @default(0)
-  dislikes Int @default(0)
-  private Boolean @default(false)
-  achievementId String @db.ObjectId
-  createdAt DateTime @default(now())
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  body          String
+  likes         Int      @default(0)
+  dislikes      Int      @default(0)
+  private       Boolean  @default(false)
+  achievementId String   @db.ObjectId
+  createdAt     DateTime @default(now())
 
   achievement Achievement @relation(fields: [achievementId], references: [id])
 }
-
