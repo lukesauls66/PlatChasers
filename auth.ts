@@ -4,10 +4,13 @@ import Facebook from "next-auth/providers/facebook";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import prismadb from "@/lib/prismadb";
+import client from "@/lib/prismadb";
 import { signInSchema } from "./lib/zod";
 import { compare } from "bcrypt";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  adapter: PrismaAdapter(client),
   providers: [
     Google,
     Facebook,
@@ -24,17 +27,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           where: {
             email: email,
           },
-          include: {
-            games: true,
-            accounts: true,
-          },
         });
 
-        if (!user || !user.hashedPasword) {
+        if (!user || !user.hashedPassword) {
           throw new Error("Email does not exist");
         }
 
-        const isPasswordValid = await compare(password, user.hashedPasword);
+        const isPasswordValid = await compare(password, user.hashedPassword);
 
         if (!isPasswordValid) {
           throw new Error("Incorrect password");
