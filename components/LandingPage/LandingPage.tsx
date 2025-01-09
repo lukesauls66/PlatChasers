@@ -7,12 +7,6 @@ import { useVariant } from "@/context/Variant";
 const LandingPage = () => {
   const { variant } = useVariant();
 
-  // const toggleVariant = useCallback(() => {
-  //   setVariant((currVariant: string) =>
-  //     currVariant === "login" ? "register" : "login"
-  //   );
-  // }, [variant]);
-
   console.log("VARIANT: ", variant);
 
   return (
@@ -26,7 +20,6 @@ const LandingPage = () => {
       )}
     </div>
   );
-  <h1>PlatChasers</h1>;
 };
 
 export default LandingPage;
