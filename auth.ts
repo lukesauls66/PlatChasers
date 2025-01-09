@@ -25,6 +25,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           where: {
             email: email,
           },
+          include: {
+            games: true,
+            accounts: true,
+          },
         });
 
         if (!user || !user.hashedPassword) {
@@ -38,7 +42,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
 
         console.log("USER: ", user);
-        return user;
+        return {
+          id: user.id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          image: user.image || null,
+          username: user.username,
+          underReview: user.underReview,
+          isAdmin: user.isAdmin,
+          createdAt: user.createdAt.toISOString(),
+          games: user.games, // Include games
+          accounts: user.accounts, // Include accounts
+        };
       },
     }),
   ],
@@ -96,46 +112,54 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       return true;
     },
+    async jwt({ token, user }) {
+      if (user) {
+        const dbUser = await prismadb.user.findUnique({
+          where: { id: user.id },
+          include: {
+            games: true,
+            accounts: {
+              select: {
+                id: true,
+                userId: true,
+                type: true,
+                provider: true,
+              },
+            },
+          },
+        });
+
+        if (dbUser) {
+          token.id = dbUser.id;
+          token.firstName = dbUser.firstName;
+          token.lastName = dbUser.lastName;
+          token.email = dbUser.email;
+          token.username = dbUser.username;
+          token.underReview = dbUser.underReview;
+          token.isAdmin = dbUser.isAdmin;
+          token.createdAt = dbUser.createdAt;
+          token.games = dbUser.games;
+          token.accounts = dbUser.accounts;
+        }
+      }
+
+      return token;
+    },
+    async session({ session, token }) {
+      if (token) {
+        session.user.id = token.id as string;
+        session.user.firstName = token.firstName as string;
+        session.user.lastName = token.lastName as string;
+        session.user.email = token.email as string;
+        session.user.username = token.username as string;
+        session.user.underReview = token.underReview as boolean;
+        session.user.isAdmin = token.isAdmin as boolean;
+        session.user.createdAt = token.createdAt as string;
+        session.user.games = token.games as any[];
+        session.user.accounts = token.accounts as any[];
+      }
+
+      return session;
+    },
   },
 });
-
-// async function handleAccountLinking(user, account, profile) {
-//   const existingAccount = await prismadb.account.findUnique({
-//     where: {
-//       provider_providerAccountId: {
-//         provider: account?.provider,
-//         providerAccountId: account?.providerAccountId,
-//       },
-//     },
-//   });
-
-//   if (existingAccount) {
-//     return true;
-//   }
-
-//   const existingUser = await prismadb.user.findUnique({
-//     where: { email: user.email },
-//   });
-
-//   if (existingUser) {
-//     await prismadb.account.create({
-//       data: {
-//         userId: existingUser.id,
-//         type: "oauth",
-//         provider: account.provider,
-//         providerAccountId: account.providerAccountId,
-//         access_token: account.access_token,
-//         refresh_token: account.refresh_token,
-//         expires_at: account.expires_at,
-//         id_token: account.id_token,
-//         token_type: account.token_type,
-//       },
-//     });
-
-//     return true;
-//   } else {
-//     return {
-//       redirect: "/?Variant=register",
-//     };
-//   }
-// }

@@ -63,6 +63,16 @@ const LoginPage: React.FC = () => {
           </button>
         </div>
 
+        <div className="flex flex-col items-center gap-1">
+          <p className="font-semibold">DISCLAIMER:</p>
+          <p className="flex text-center">
+            Please create an account through this site using the email you use
+            with your provider (Google, Discord, or Facebook) before logging in
+            with your provider in order to link said account to our site.
+          </p>
+          <p>Thank you!</p>
+        </div>
+
         <div className="flex flex-col gap-4 items-center">
           <button
             className="flex flex-col-reverse gap-1 items-center text-xl"

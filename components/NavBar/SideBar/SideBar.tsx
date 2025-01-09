@@ -23,8 +23,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
         } w-[140px] md:w-[280px] p-4 z-40`}
       >
         {status === "authenticated" ? (
-          <div>
-            <p>{session?.user?.name}</p>
+          <div className="flex flex-col items-center h-[95vh] justify-between">
+            <p>{session?.user?.username}</p>
             <LogoutButton />
           </div>
         ) : (

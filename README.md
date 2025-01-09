@@ -85,7 +85,7 @@ Returns the information about the current User or Admin that is logged in.
 - Request:
 
   - Method: GET
-  - Route path: /session
+  - Route path: /auth/[...nextauth]/
   - Body: none
 
 - Successful Response when there is a logged in User
