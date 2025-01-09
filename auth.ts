@@ -4,13 +4,12 @@ import Facebook from "next-auth/providers/facebook";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import prismadb from "@/lib/prismadb";
-import client from "@/lib/prismadb";
 import { signInSchema } from "./lib/zod";
 import { compare } from "bcrypt";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: PrismaAdapter(client),
+  adapter: PrismaAdapter(prismadb),
   providers: [
     Google,
     Facebook,
