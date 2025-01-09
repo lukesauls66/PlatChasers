@@ -1,3 +1,5 @@
+"use client";
+
 interface InputProps {
   id: string;
   onChange?: any;
