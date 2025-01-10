@@ -27,6 +27,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           },
           include: {
             games: true,
+            gamePosts: true,
+            achievementPosts: true,
             accounts: true,
           },
         });
@@ -52,8 +54,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           underReview: user.underReview,
           isAdmin: user.isAdmin,
           createdAt: user.createdAt.toISOString(),
-          games: user.games, // Include games
-          accounts: user.accounts, // Include accounts
+          games: user.games,
+          gamePosts: user.gamePosts,
+          achievementPosts: user.achievementPosts,
+          accounts: user.accounts,
         };
       },
     }),
@@ -118,6 +122,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           where: { id: user.id },
           include: {
             games: true,
+            gamePosts: true,
+            achievementPosts: true,
             accounts: {
               select: {
                 id: true,
@@ -139,6 +145,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           token.isAdmin = dbUser.isAdmin;
           token.createdAt = dbUser.createdAt;
           token.games = dbUser.games;
+          token.gamePosts = dbUser.gamePosts;
+          token.achievementPosts = dbUser.achievementPosts;
           token.accounts = dbUser.accounts;
         }
       }
@@ -156,6 +164,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.isAdmin = token.isAdmin as boolean;
         session.user.createdAt = token.createdAt as string;
         session.user.games = token.games as any[];
+        session.user.gamePosts = token.gamePosts as any[];
+        session.user.achievementPosts = token.achievementPosts as any[];
         session.user.accounts = token.accounts as any[];
       }
 

@@ -16,6 +16,8 @@ export async function GET() {
         createdAt: true,
         updatedAt: true,
         games: true,
+        gamePosts: true,
+        achievementPosts: true,
         accounts: {
           select: {
             id: true,

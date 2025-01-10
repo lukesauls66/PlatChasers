@@ -12,6 +12,8 @@ declare module "next-auth" {
       isAdmin: boolean;
       createdAt: string;
       games: any[];
+      gamePosts: any[];
+      achievementPosts: any[];
       accounts: any[];
     } & DefaultSession["user"];
   }
@@ -26,6 +28,8 @@ declare module "next-auth" {
     isAdmin: boolean;
     createdAt: string;
     games: any[];
+    gamePosts: any[];
+    achievementPosts: any[];
     accounts: any[];
   }
 }
@@ -41,6 +45,8 @@ declare module "next-auth/jwt" {
     isAdmin: boolean;
     createdAt: string;
     games: any[];
+    gamePosts: any[];
+    achievementPosts: any[];
     accounts: any[];
   }
 }
