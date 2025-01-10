@@ -15,6 +15,9 @@ export async function GET() {
         isAdmin: true,
         createdAt: true,
         updatedAt: true,
+        _count: {
+          select: { games: true, gamePosts: true, achievementPosts: true },
+        },
         games: true,
         gamePosts: true,
         achievementPosts: true,
@@ -31,6 +34,9 @@ export async function GET() {
 
     return NextResponse.json(users);
   } catch (error) {
-    return NextResponse.json({ error: "An error occurred" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }

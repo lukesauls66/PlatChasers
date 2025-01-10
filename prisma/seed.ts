@@ -128,7 +128,7 @@ async function seedUsers() {
   return users;
 }
 
-async function seedGames() {
+async function seedGames(users: any[]) {
   const games = await Promise.all([
     prisma.game.upsert({
       where: { title: "Elden Ring" },
@@ -142,15 +142,15 @@ async function seedGames() {
           create: [
             {
               body: "I'm stuck in Nokron, the Eternal City! Every time I think I'm close to the next area, more enemies appear. Anyone got tips on surviving the area?",
-              userId: "67808e929c6d7624b868909e",
+              userId: users[4].id,
             },
             {
               body: "I recommend picking off the enemies one at a time to preserve your healing flasks, since a lot of the enemies there hurt too much to fight at once",
-              userId: "67808e929c6d7624b86890a0",
+              userId: users[5].id,
             },
             {
               body: "I made it out, finally!! Thank you so much, i was definitely aggroing too many at once.",
-              userId: "67808e929c6d7624b868909e",
+              userId: users[4].id,
             },
           ],
         },
@@ -170,7 +170,7 @@ async function seedGames() {
                   {
                     body: "I'm almost done, i just need to beat: Maliketh, Hoarah Loux, and then Radagon/Elden Beast. I should grind a about 15 more levels so I can use the giant-crusher, get some more health and try to get some more endurance so I can wear heavier armor.",
                     private: true,
-                    userId: "67808e929c6d7624b86890a4",
+                    userId: users[7].id,
                   },
                 ],
               },
@@ -384,11 +384,11 @@ async function seedGames() {
   return games;
 }
 
-async function seedUserFavoriteGames() {
+async function seedUserFavoriteGames(users: any[], games: any[]) {
   const userFavoriteGames = [
     {
-      userId: "67808e929c6d7624b86890a1",
-      gameId: "67809bd041b710c85fc51954",
+      userId: users[7].id,
+      gameId: games[0].id,
     },
   ];
 
@@ -399,9 +399,9 @@ async function seedUserFavoriteGames() {
 
 async function main() {
   const users = await seedUsers();
-  const games = await seedGames();
+  const games = await seedGames(users);
 
-  await seedUserFavoriteGames();
+  await seedUserFavoriteGames(users, games);
 
   return { users, games };
 }

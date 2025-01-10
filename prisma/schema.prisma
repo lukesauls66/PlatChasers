@@ -81,7 +81,6 @@ model Game {
   id           String             @id @default(auto()) @map("_id") @db.ObjectId
   title        String             @unique
   description  String
-  gamePostsNum Int                @default(0)
   image        String
   isCompleted  Boolean            @default(false)
   favoritedBy  UserFavoriteGame[]
@@ -107,7 +106,6 @@ model Achievement {
   id                  String            @id @default(auto()) @map("_id") @db.ObjectId
   title               String
   description         String
-  achievementPostsNum Int               @default(0)
   image               String
   isUnlocked          Boolean           @default(false)
   gameId              String            @db.ObjectId
