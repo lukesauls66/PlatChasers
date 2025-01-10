@@ -5,6 +5,7 @@ import Input from "../Util";
 import { login } from "../LoginPage/LoginPage";
 import { useCallback, useState } from "react";
 import { useVariant } from "@/context/Variant";
+import { Button } from "../ui/button";
 
 const SignupPage: React.FC = () => {
   const { setVariant } = useVariant();
@@ -82,16 +83,17 @@ const SignupPage: React.FC = () => {
               }
             />
           </div>
-          <button
-            className="rounded-md py-2 w-[9rem] text-md border-[1px] border-black"
-            type="submit"
+          <Button
             onClick={() => {
               register();
               setVariant("home");
             }}
+            variant={"destructive"}
+            size={"lg"}
+            className="bg-purple-700 hover:bg-purple-700/80"
           >
-            Create account
-          </button>
+            Create Account
+          </Button>
         </div>
         <div className="flex flex-col items-center gap-2">
           <p>Already have an account?</p>

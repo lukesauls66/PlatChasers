@@ -7,6 +7,7 @@ import { useVariant } from "@/context/Variant";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { FaDiscord } from "react-icons/fa";
+import { Button } from "../ui/button";
 
 export const login = async (email: string, password: string) => {
   try {
@@ -51,7 +52,18 @@ const LoginPage: React.FC = () => {
               }
             />
           </div>
-          <button
+          <Button
+            onClick={() => {
+              login(email, password);
+              setVariant("home");
+            }}
+            variant={"destructive"}
+            size={"lg"}
+            className="bg-purple-700 hover:bg-purple-700/80"
+          >
+            Sign In
+          </Button>
+          {/* <button
             onClick={() => {
               login(email, password);
               setVariant("home");
@@ -60,7 +72,7 @@ const LoginPage: React.FC = () => {
             type="submit"
           >
             Sign In
-          </button>
+          </button> */}
         </div>
 
         <div className="flex flex-col items-center gap-1">

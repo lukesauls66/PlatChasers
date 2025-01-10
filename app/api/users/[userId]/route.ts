@@ -10,13 +10,54 @@ export async function GET(
   try {
     const user = await prismadb.user.findUnique({
       where: { id: userId },
+      include: {
+        _count: {
+          select: { games: true, gamePosts: true, achievementPosts: true },
+        },
+        games: {
+          select: {
+            game: {
+              select: {
+                title: true,
+                image: true,
+                isCompleted: true,
+              },
+            },
+          },
+        },
+        gamePosts: true,
+        achievementPosts: true,
+        accounts: {
+          select: {
+            id: true,
+            userId: true,
+            type: true,
+            provider: true,
+          },
+        },
+      },
     });
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    return NextResponse.json(user);
+    const completedGameCount = await prismadb.userFavoriteGame.count({
+      where: {
+        userId: user.id,
+        game: { isCompleted: true },
+      },
+    });
+
+    const userWithCompletedGames = {
+      ...user,
+      _count: {
+        ...user._count,
+        completedGameCount,
+      },
+    };
+
+    return NextResponse.json(userWithCompletedGames);
   } catch (error) {
     console.error("Error getting user: ", error);
     return NextResponse.json(
@@ -27,10 +68,21 @@ export async function GET(
 }
 
 export async function PUT(
-  req: Request,
+  req: NextRequest,
   { params }: { params: { userId: string } }
 ) {
   const { userId } = await params;
+
+  const existingUser = await prismadb.user.findUnique({
+    where: { id: userId },
+  });
+
+  if (!existingUser) {
+    return NextResponse.json(
+      { error: "User couldn't be found" },
+      { status: 404 }
+    );
+  }
 
   try {
     const {
@@ -67,7 +119,7 @@ export async function PUT(
 }
 
 export async function DELETE(
-  req: Request,
+  req: NextRequest,
   { params }: { params: { userId: string } }
 ) {
   const { userId } = await params;
