@@ -135,6 +135,12 @@ export async function DELETE(
 
     await prismadb.user.delete({
       where: { id: userId },
+      include: {
+        games: true,
+        gamePosts: true,
+        achievementPosts: true,
+        accounts: true,
+      },
     });
 
     return NextResponse.json({ message: "User deleted successfully" });

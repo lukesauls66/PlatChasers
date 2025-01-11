@@ -115,15 +115,18 @@ export async function DELETE(
 
     await prismadb.game.delete({
       where: { id: gameId },
+      include: {
+        favoritedBy: true,
+        gamePosts: true,
+        achievements: true,
+      },
     });
 
     return NextResponse.json({ message: "Game deleted successfully" });
   } catch (error) {
     console.error("Error deleting game: ", error);
     return NextResponse.json(
-      {
-        error: "Internal server error",
-      },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }
