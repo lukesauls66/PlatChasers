@@ -14,6 +14,8 @@ const SignupPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState({});
 
   const register = useCallback(async () => {
     try {
@@ -80,6 +82,15 @@ const SignupPage: React.FC = () => {
               value={password}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setPassword(e.target.value)
+              }
+            />
+            <Input
+              label="Confirm Password"
+              type="confirmPassword"
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setConfirmPassword(e.target.value)
               }
             />
           </div>
