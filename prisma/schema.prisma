@@ -111,7 +111,7 @@ model Achievement {
   gameId              String            @db.ObjectId
   achievementPosts    AchievementPost[]
 
-  game Game @relation(fields: [gameId], references: [id])
+  game Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
 }
 
 model AchievementPost {
@@ -125,5 +125,5 @@ model AchievementPost {
   createdAt     DateTime @default(now())
 
   user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  achievement Achievement @relation(fields: [achievementId], references: [id])
+  achievement Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
 }
