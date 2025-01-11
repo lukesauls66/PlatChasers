@@ -25,6 +25,12 @@ export async function GET(
             description: true,
             image: true,
             isUnlocked: true,
+            _count: {
+              select: {
+                achievementPosts: true,
+              },
+            },
+            achievementPosts: true,
           },
         },
       },
