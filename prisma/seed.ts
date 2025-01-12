@@ -379,6 +379,139 @@ async function seedGames(users: any[]) {
         },
       },
     }),
+    prisma.game.upsert({
+      where: { title: "Dark Souls" },
+      update: {},
+      create: {
+        title: "Dark Souls",
+        description:
+          "Dark Souls is a critically acclaimed action role-playing game known for its challenging combat, intricate world design, and deep lore. Set in a dark, atmospheric fantasy universe, players must battle relentless enemies and uncover hidden secrets while mastering the balance between risk and reward.",
+        image: "https://i.ibb.co/5rQdhNK/dark-souls-preview.webp",
+        achievements: {
+          create: [
+            {
+              title: "The Dark Soul",
+              description: "All achievements completed. Congratulations!",
+              image: "https://i.ibb.co/YkHBpL0/the-dark-soul.webp",
+            },
+          ],
+        },
+      },
+    }),
+    prisma.game.upsert({
+      where: { title: "Hollow Knight: Voidheart Edition" },
+      update: {},
+      create: {
+        title: "Hollow Knight: Voidheart Edition",
+        description:
+          "Hollow Knight is a captivating action-adventure game set in the mysterious, hand-drawn world of Hallownest. Players explore sprawling, interconnected environments, face challenging enemies, and unravel a haunting story of decay, resilience, and discovery.",
+        image: "https://i.ibb.co/ykGft7Y/hollow-knight.webp",
+        achievements: {
+          create: [
+            {
+              title: "Charmed",
+              description: "Acquire your first Charm",
+              image: "https://i.ibb.co/VmvcsMd/hk-charmed.jpg",
+            },
+          ],
+        },
+      },
+    }),
+    prisma.game.upsert({
+      where: { title: "Disney Dreamlight Valley" },
+      update: {},
+      create: {
+        title: "Disney Dreamlight Valley",
+        description:
+          "Disney Dreamlight Valley is a life-simulation adventure game where players restore a magical world alongside beloved Disney and Pixar characters. With activities like farming, fishing, and questing, it combines cozy gameplay with enchanting storytelling in a vibrant, ever-evolving universe.",
+        image: "https://i.ibb.co/QkfHHjN/dreamlight-valley-preview.jpg",
+        achievements: {
+          create: [
+            {
+              title: "Angler",
+              description: "Catch 1,800 fish",
+              image: "https://i.ibb.co/4SfPD5G/dv-angler.webp",
+            },
+          ],
+        },
+      },
+    }),
+    prisma.game.upsert({
+      where: { title: "Cult of the Lamb" },
+      update: {},
+      create: {
+        title: "Cult of the Lamb",
+        description:
+          "Cult of the Lamb is a darkly charming roguelike where players build and lead their own cult in a whimsical, sinister world. Combining dungeon crawling with base-building mechanics, it offers a unique blend of action, strategy, and dark humor.",
+        image: "https://i.ibb.co/cLz5hd4/cult-lamb-preview.jpg",
+        achievements: {
+          create: [
+            {
+              title: "First Follower",
+              description: "The first devotee to the Cult of the Lamb",
+              image: "https://i.ibb.co/gP3nxPL/cult-lamb-first-follower.webp",
+            },
+          ],
+        },
+      },
+    }),
+    prisma.game.upsert({
+      where: { title: "Minecraft" },
+      update: {},
+      create: {
+        title: "Minecraft",
+        description:
+          "Minecraft is a sandbox game that lets players unleash their creativity by building, exploring, and surviving in infinite, blocky worlds. With modes ranging from peaceful creation to intense survival, it offers endless adventures and a thriving community for all ages.",
+        image: "https://i.ibb.co/GHw3HLb/minecraft-preview.jpg",
+        achievements: {
+          create: [
+            {
+              title: "Acquire Hardware",
+              description: "Smelt an iron ingot",
+              image: "https://i.ibb.co/3yDDyjs/minecraft-acquire-hardware.webp",
+            },
+          ],
+        },
+      },
+    }),
+    prisma.game.upsert({
+      where: { title: "Marvel Rivals" },
+      update: {},
+      create: {
+        title: "Marvel Rivals",
+        description:
+          "Marvel Rivals is a free-to-play, team-based PvP shooter that lets players assemble squads of iconic Marvel heroes and villains. Developed by NetEase Games, it features dynamic battlefields and unique team-up skills, offering an engaging experience for fans of the Marvel universe.",
+        image: "https://i.ibb.co/DQ0p4Bz/marvel-rivals.jpg",
+        achievements: {
+          create: [
+            {
+              title: "Rising Star",
+              description: "Reach level 20",
+              image: "https://i.ibb.co/SBZtSY7/marvel-rivals-rising-star.webp",
+            },
+          ],
+        },
+      },
+    }),
+    prisma.game.upsert({
+      where: { title: "Stardew Valley" },
+      update: {},
+      create: {
+        title: "Stardew Valley",
+        description:
+          "Stardew Valley is a charming farming simulation game where players escape to the countryside to build their dream farm, forge relationships, and uncover the secrets of a quaint village. With its relaxing gameplay, pixel-art style, and endless activities, it offers a heartwarming blend of creativity and adventure.",
+        image: "https://i.ibb.co/ZVLydfQ/stardew-valley-preview.webp",
+        achievements: {
+          create: [
+            {
+              title: "Greenhorn",
+              description: "Earn 15,000g",
+              image: "https://i.ibb.co/ypDxjY2/stardew-greenhorn.webp",
+            },
+          ],
+        },
+      },
+    }),
   ]);
 
   return games;
@@ -389,6 +522,26 @@ async function seedUserFavoriteGames(users: any[], games: any[]) {
     {
       userId: users[7].id,
       gameId: games[0].id,
+    },
+    {
+      userId: users[0].id,
+      gameId: games[0].id,
+    },
+    {
+      userId: users[0].id,
+      gameId: games[1].id,
+    },
+    {
+      userId: users[0].id,
+      gameId: games[2].id,
+    },
+    {
+      userId: users[0].id,
+      gameId: games[4].id,
+    },
+    {
+      userId: users[0].id,
+      gameId: games[6].id,
     },
   ];
 

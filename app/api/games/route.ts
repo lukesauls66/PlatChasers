@@ -30,6 +30,9 @@ export async function GET() {
           },
         },
       },
+      orderBy: {
+        title: "asc",
+      },
     });
 
     const gamesWithUnlockedAchievements = await Promise.all(
