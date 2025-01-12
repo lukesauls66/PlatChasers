@@ -3,7 +3,19 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
+    const demoEmails = [
+      "demo-good@example.com",
+      "demo-bad@example.com",
+      "demo-admin@example.com",
+    ];
+
     const users = await prismadb.user.findMany({
+      where: {
+        email: {
+          notIn: demoEmails,
+        },
+        isAdmin: false,
+      },
       select: {
         id: true,
         firstName: true,
@@ -29,6 +41,9 @@ export async function GET() {
             provider: true,
           },
         },
+      },
+      orderBy: {
+        firstName: "asc",
       },
     });
 
