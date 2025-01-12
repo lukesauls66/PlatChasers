@@ -132,7 +132,10 @@ async function seedGames(users: any[]) {
   const games = await Promise.all([
     prisma.game.upsert({
       where: { title: "Elden Ring" },
-      update: {},
+      update: {
+        description:
+          "Elden Ring is an expansive action RPG set in a vast open world, where players explore dark landscapes, battle formidable foes, and uncover a deep, lore-rich story. With its challenging combat and stunning visuals, it offers a unique blend of exploration, strategy, and fantasy in true FromSoftware fashion.",
+      },
       create: {
         title: "Elden Ring",
         description:
