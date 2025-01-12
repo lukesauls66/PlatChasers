@@ -18,7 +18,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
   return (
     <div>
       <div
-        className={`fixed top-0 right-0 h-full bg-gray-400 text-purple-600 text-xl md:text-2xl font-bold transition-transform duration-300 ${
+        className={`fixed top-0 right-0 h-full bg-[#c0bfbf] text-[#53285f] text-xl md:text-2xl font-bold transition-transform duration-300 ${
           isOpen ? "transform translate-x-0" : "transform translate-x-full"
         } w-[140px] md:w-[280px] p-4 z-40`}
       >
