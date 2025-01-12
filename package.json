@@ -12,6 +12,8 @@
     "@auth/core": "0.37.2",
     "@auth/prisma-adapter": "2.7.2",
     "@prisma/client": "^6.2.0",
+    "@radix-ui/react-scroll-area": "^1.2.2",
+    "@radix-ui/react-separator": "^1.1.1",
     "@radix-ui/react-slot": "^1.1.1",
     "arg": "^5.0.2",
     "axios": "^1.7.9",
