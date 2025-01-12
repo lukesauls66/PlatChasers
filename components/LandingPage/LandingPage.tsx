@@ -2,6 +2,7 @@
 
 import LoginPage from "@/components/LoginPage";
 import SignupPage from "@/components/SignupPage";
+import HomePage from "../HomePage/HomePage";
 import { useVariant } from "@/context/Variant";
 import { useEffect, useState } from "react";
 
@@ -33,7 +34,7 @@ const LandingPage = () => {
   return (
     <div className="bg-[#e7e7e7] min-h-screen">
       {variant === "home" ? (
-        <h1>PlatChasers</h1>
+        <HomePage />
       ) : variant === "login" ? (
         <LoginPage />
       ) : (
