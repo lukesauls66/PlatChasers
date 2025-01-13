@@ -11,7 +11,6 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
   const { data: session, status } = useSession();
-  console.log("user: ", session?.user);
 
   const { setVariant } = useVariant();
 
