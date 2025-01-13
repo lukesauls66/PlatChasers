@@ -31,6 +31,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             games: {
               select: {
                 game: true,
+                // _count: {
+                //   select: {
+                //     achievements: true
+                //   }
+                // }
               },
             },
             gamePosts: true,
@@ -143,7 +148,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           include: {
             games: {
               select: {
-                game: true,
+                game: {
+                  select: {
+                    id: true,
+                    title: true,
+                    description: true,
+                    image: true,
+                    _count: {
+                      select: {
+                        achievements: true,
+                      },
+                    },
+                  },
+                },
               },
             },
             gamePosts: true,
@@ -169,11 +186,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           token.underReview = dbUser.underReview;
           token.isAdmin = dbUser.isAdmin;
           token.createdAt = dbUser.createdAt;
-          token.games = dbUser.games.map((ufg) => ufg.game) as Game[];
           token.gamePosts = dbUser.gamePosts;
           token.achievementPosts = dbUser.achievementPosts;
           token.accounts = dbUser.accounts;
           token._count = dbUser._count;
+          token.games = dbUser.games.map((ufg) => ufg.game) as Game[];
         }
       }
 

@@ -23,7 +23,6 @@ const HomePage = () => {
     const fetchGames = async () => {
       try {
         const res = await axios.get("/api/games");
-        console.log("Fetched games res: ", res.data);
         setGames(res.data);
       } catch (error) {
         setError("Failed to fetch games");
@@ -52,8 +51,10 @@ const HomePage = () => {
   return (
     <div className="pb-8">
       {status === "authenticated" ? (
-        <div className="flex flex-col items-center gap-8 pt-8">
-          <p className="text-2xl font-bold">Welcome!</p>
+        <div className="flex flex-col items-center gap-4 pt-4">
+          <p className="text-lg font-bold font-it text-center italic">
+            CHASE YOUR <br /> ACHIEVEMENT GOALS!
+          </p>
           <CompletedGames />
           <FavoritedGames userGames={userGames} />
           <ExploreGames games={games} />
