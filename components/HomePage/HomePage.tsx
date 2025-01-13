@@ -1,3 +1,5 @@
+"use client";
+
 import axios from "axios";
 import {
   CompletedGames,
@@ -15,10 +17,6 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  console.log("user: ", session?.user);
-  console.log("Games: ", games);
-  console.log("User games: ", userGames);
-
   useEffect(() => {
     const fetchGames = async () => {
       try {
@@ -31,7 +29,7 @@ const HomePage = () => {
       }
     };
 
-    setUserGames(session?.user?.games as Game[] | null);
+    setUserGames(session?.user?.games ?? null);
 
     fetchGames();
   }, [session?.user?.games]);

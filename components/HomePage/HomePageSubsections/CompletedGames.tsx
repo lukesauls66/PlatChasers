@@ -1,5 +1,8 @@
+"use client";
+
 import { Game } from "@/types/game";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 
@@ -8,9 +11,6 @@ const CompletedGames = () => {
   const [completedGames, setCompletedGames] = useState<Game[]>([]);
   const [sortedCompletedGames, setSortedCompletedGames] = useState<Game[]>([]);
   const [error, setError] = useState<string | null>(null);
-
-  console.log("Completed games: ", completedGames);
-  console.log("Sorted completed games: ", sortedCompletedGames);
 
   useEffect(() => {
     const fetchCompletedGames = async () => {
@@ -54,17 +54,22 @@ const CompletedGames = () => {
             {sortedCompletedGames.map((game) => {
               return (
                 <div key={game.id} className="flex flex-col gap-5">
-                  <div className="flex justify-between">
-                    <img
-                      className="w-12 h-12"
-                      src={game.image}
-                      alt={game.title}
-                    />
-                    <div className="flex flex-grow items-center justify-center bg-[#e7e7e7]">
-                      <h3 className="text-md text-center font-semibold">
-                        {game.title}
-                      </h3>
-                    </div>
+                  <div>
+                    <Link
+                      href={`/games/${game.id}`}
+                      className="flex justify-between"
+                    >
+                      <img
+                        className="w-12 h-12"
+                        src={game.image}
+                        alt={game.title}
+                      />
+                      <div className="flex flex-grow items-center justify-center bg-[#e7e7e7]">
+                        <h3 className="text-md text-center font-semibold">
+                          {game.title}
+                        </h3>
+                      </div>
+                    </Link>
                   </div>
                 </div>
               );

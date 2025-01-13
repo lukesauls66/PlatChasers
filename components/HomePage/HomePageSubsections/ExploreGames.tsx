@@ -1,5 +1,8 @@
+"use client";
+
 import { Game } from "@/types/game";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 
 interface ExploreGamesProps {
@@ -42,17 +45,22 @@ const ExploreGames: React.FC<ExploreGamesProps> = ({ games }) => {
           return (
             <div key={game.id} className="flex flex-col">
               <div className="flex flex-col gap-5 bg-[#e7e7e7]">
-                <div className="flex justify-between">
-                  <img
-                    className="w-12 h-12"
-                    src={game.image}
-                    alt={game.title}
-                  />
-                  <div className="flex flex-grow items-center justify-center bg-[#e7e7e7]">
-                    <h3 className="text-md text-center font-semibold">
-                      {game.title}
-                    </h3>
-                  </div>
+                <div>
+                  <Link
+                    href={`games/${game.id}`}
+                    className="flex justify-between"
+                  >
+                    <img
+                      className="w-12 h-12"
+                      src={game.image}
+                      alt={game.title}
+                    />
+                    <div className="flex flex-grow items-center justify-center bg-[#e7e7e7]">
+                      <h3 className="text-md text-center font-semibold">
+                        {game.title}
+                      </h3>
+                    </div>
+                  </Link>
                 </div>
                 <div className="flex justify-evenly">
                   <div className="flex flex-col gap-1 bg-[#e7e7e7]">
