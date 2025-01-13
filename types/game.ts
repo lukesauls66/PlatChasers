@@ -30,6 +30,7 @@ export interface GamePost {
   userId: string;
   gameId: string;
   createdAt: string;
+  username?: string;
 }
 
 export interface Game {
