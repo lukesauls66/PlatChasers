@@ -32,7 +32,19 @@ export async function GET() {
         },
         games: {
           select: {
-            game: true,
+            game: {
+              select: {
+                id: true,
+                title: true,
+                description: true,
+                image: true,
+                _count: {
+                  select: {
+                    achievements: true,
+                  },
+                },
+              },
+            },
           },
         },
         gamePosts: true,

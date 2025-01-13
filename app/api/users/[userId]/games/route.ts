@@ -10,14 +10,30 @@ export async function GET(
   try {
     const completedGamesRelations = await prismadb.userFavoriteGame.findMany({
       where: { userId, isCompleted: true },
-      include: { game: true },
+      include: {
+        game: {
+          include: {
+            _count: {
+              select: {
+                achievements: true,
+              },
+            },
+            achievements: true,
+          },
+        },
+      },
     });
 
     console.log("Relations: ", completedGamesRelations);
 
-    const completedGames = completedGamesRelations.map(
-      (favoritedGame) => favoritedGame.game
-    );
+    const completedGames = completedGamesRelations.map((favoritedGame) => ({
+      id: favoritedGame.game.id,
+      title: favoritedGame.game.title,
+      description: favoritedGame.game.description,
+      image: favoritedGame.game.image,
+      achievementCount: favoritedGame.game._count.achievements,
+      achievements: favoritedGame.game.achievements,
+    }));
 
     console.log("Games: ", completedGames);
 
