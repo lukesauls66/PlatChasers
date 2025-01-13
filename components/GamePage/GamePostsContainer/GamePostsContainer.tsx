@@ -12,8 +12,6 @@ interface GamePostsContainerProps {
 const GamePostsContainer: React.FC<GamePostsContainerProps> = ({ game }) => {
   const [gamePosts, setGamePosts] = useState<GamePost[]>([]);
 
-  console.log("Game posts: ", gamePosts);
-
   useEffect(() => {
     const fetchUsernames = async () => {
       if (!game?.gamePosts) return;
@@ -38,8 +36,8 @@ const GamePostsContainer: React.FC<GamePostsContainerProps> = ({ game }) => {
   const arePosts = gamePosts.length > 0;
 
   return (
-    <div className="flex flex-col gap-4 items-center h-[18rem] w-[16.5rem] rounded-md border-black border-2 bg-white overflow-y-auto">
-      <div className="sticky top-0 flex justify-center bg-[#53285f]/90 mt-2 pt-1 w-60 h-8">
+    <div className="flex flex-col gap-4 items-center h-[20rem] w-[16.5rem] rounded-md border-black border-2 bg-white overflow-y-auto">
+      <div className="sticky top-0 flex justify-center bg-[#53285f]/90 mt-2 pt-1 w-60 h-8 rounded-sm">
         <h1 className="font-semibold text-xl text-[#e7e7e7]">Game Posts</h1>
       </div>
       {arePosts ? (
@@ -47,7 +45,7 @@ const GamePostsContainer: React.FC<GamePostsContainerProps> = ({ game }) => {
           <Button
             variant={"destructive"}
             size={"lg"}
-            className="bg-[#ae3634] hover:bg-purple-700/80 w-[8.5rem]"
+            className="bg-[#ae3634] hover:bg-[#ae3634]/80"
           >
             Post
           </Button>
@@ -56,7 +54,7 @@ const GamePostsContainer: React.FC<GamePostsContainerProps> = ({ game }) => {
 
             return (
               <div key={post.id}>
-                <div className="flex flex-col gap-4 bg-[#e7e7e7] p-3 border-black border-2">
+                <div className="flex flex-col gap-4 bg-[#e7e7e7] p-3 border-black border-2 rounded-sm w-[15.4rem]">
                   <div className="flex justify-between">
                     <p className="text-sm font-semibold">Posted by:</p>
                     <p className="text-sm italic">{post.username}</p>
