@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Game } from "@/types/game";
 import axios from "axios";
 import GamePostsContainer from "./GamePostsContainer";
+import AchievementsSection from "./AchievementsSection";
 
 interface GamePageProps {
   gameId: string;
@@ -24,7 +25,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameId }) => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-6 p-6 bg-[#e7e7e7]">
+    <div className="flex flex-col items-center gap-6 p-6 bg-[#e7e7e7]">
       <h1 className="text-2xl text-center font-bold italic underline underline-offset-8">
         {game?.title}
       </h1>
@@ -36,6 +37,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameId }) => {
         />
       </div>
       <p className="text-center">{game?.description}</p>
+      <AchievementsSection game={game} />
       <GamePostsContainer game={game} />
     </div>
   );

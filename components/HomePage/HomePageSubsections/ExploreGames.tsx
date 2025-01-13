@@ -63,7 +63,7 @@ const ExploreGames: React.FC<ExploreGamesProps> = ({ games }) => {
                   </Link>
                 </div>
                 <div className="flex justify-evenly">
-                  <div className="flex flex-col gap-1 bg-[#e7e7e7]">
+                  <div className="flex flex-col gap-1 bg-[#e7e7e7] px-1 pb-1">
                     <p className="text-sm font-semibold">Description:</p>
                     <p className="text-sm">{game.description}</p>
                   </div>
