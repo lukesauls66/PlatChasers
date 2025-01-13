@@ -14,22 +14,23 @@ datasource db {
 }
 
 model User {
-  id               String             @id @default(auto()) @map("_id") @db.ObjectId
-  firstName        String
-  lastName         String
-  image            String?
-  email            String             @unique
-  username         String             @unique
-  hashedPassword   String
-  underReview      Boolean            @default(false)
-  isAdmin          Boolean            @default(false)
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  games            UserFavoriteGame[]
-  gamePosts        GamePost[]
-  achievementPosts AchievementPost[]
-  sessions         Session[]
-  accounts         Account[]
+  id                 String             @id @default(auto()) @map("_id") @db.ObjectId
+  firstName          String
+  lastName           String
+  image              String?
+  email              String             @unique
+  username           String             @unique
+  hashedPassword     String
+  underReview        Boolean            @default(false)
+  isAdmin            Boolean            @default(false)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  games              UserFavoriteGame[]
+  achievements       UserAchievement[]
+  gamePosts          GamePost[]
+  achievementPosts   AchievementPost[]
+  sessions           Session[]
+  accounts           Account[]
 }
 
 model Account {
@@ -70,11 +71,25 @@ model VerificationToken {
 }
 
 model UserFavoriteGame {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @db.ObjectId
-  gameId String @db.ObjectId
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  game   Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String  @db.ObjectId
+  gameId      String  @db.ObjectId
+  isCompleted Boolean @default(false)
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  game        Game    @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, gameId])
+}
+
+model UserAchievement {
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String      @db.ObjectId
+  achievementId String      @db.ObjectId
+  isUnlocked    Boolean     @default(false)
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, achievementId])
 }
 
 model Game {
@@ -82,7 +97,6 @@ model Game {
   title        String             @unique
   description  String
   image        String
-  isCompleted  Boolean            @default(false)
   favoritedBy  UserFavoriteGame[]
   gamePosts    GamePost[]
   achievements Achievement[]
@@ -103,13 +117,13 @@ model GamePost {
 }
 
 model Achievement {
-  id                  String            @id @default(auto()) @map("_id") @db.ObjectId
-  title               String
-  description         String
-  image               String
-  isUnlocked          Boolean           @default(false)
-  gameId              String            @db.ObjectId
-  achievementPosts    AchievementPost[]
+  id               String            @id @default(auto()) @map("_id") @db.ObjectId
+  title            String
+  description      String
+  image            String
+  gameId           String            @db.ObjectId
+  unlockedBy       UserAchievement[]
+  achievementPosts AchievementPost[]
 
   game Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
 }

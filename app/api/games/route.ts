@@ -9,7 +9,6 @@ export async function GET() {
         title: true,
         description: true,
         image: true,
-        isCompleted: true,
         _count: {
           select: { gamePosts: true, achievements: true },
         },
@@ -20,7 +19,6 @@ export async function GET() {
             title: true,
             description: true,
             image: true,
-            isUnlocked: true,
             _count: {
               select: {
                 achievementPosts: true,
@@ -35,25 +33,7 @@ export async function GET() {
       },
     });
 
-    const gamesWithUnlockedAchievements = await Promise.all(
-      games.map(async (game) => {
-        const unlockedAchievementCount = await prismadb.achievement.count({
-          where: {
-            gameId: game.id,
-            isUnlocked: true,
-          },
-        });
-        return {
-          ...game,
-          _count: {
-            ...game._count,
-            unlockedAchievements: unlockedAchievementCount,
-          },
-        };
-      })
-    );
-
-    return NextResponse.json(gamesWithUnlockedAchievements);
+    return NextResponse.json(games);
   } catch (error) {
     console.log("Error getting all games: ", error);
     return NextResponse.json(

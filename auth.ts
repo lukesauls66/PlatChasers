@@ -7,6 +7,8 @@ import prismadb from "@/lib/prismadb";
 import { signInSchema } from "./lib/zod";
 import { compare } from "bcrypt";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import { AchievementPost, Game, GamePost, UserCount } from "./types/game";
+import { User } from "next-auth";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -26,12 +28,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             email: email,
           },
           include: {
-            games: true,
+            games: {
+              select: {
+                game: true,
+              },
+            },
             gamePosts: true,
             achievementPosts: true,
             accounts: true,
+            _count: true,
           },
         });
+        console.log("USER: ", user);
 
         if (!user || !user.hashedPassword) {
           throw new Error("Email does not exist");
@@ -43,22 +51,34 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           throw new Error("Incorrect password");
         }
 
-        console.log("USER: ", user);
-        return {
-          id: user.id,
-          email: user.email,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          image: user.image || null,
-          username: user.username,
-          underReview: user.underReview,
-          isAdmin: user.isAdmin,
-          createdAt: user.createdAt.toISOString(),
-          games: user.games,
-          gamePosts: user.gamePosts,
-          achievementPosts: user.achievementPosts,
-          accounts: user.accounts,
-        };
+        if (user) {
+          const userRes: User = {
+            id: user.id,
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            image: user.image || null,
+            username: user.username,
+            underReview: user.underReview,
+            isAdmin: user.isAdmin,
+            createdAt: user.createdAt.toISOString(),
+            games: user.games.map((ufg) => ufg.game) as Game[],
+            gamePosts: user.gamePosts.map((post) => ({
+              ...post,
+              createdAt: post.createdAt.toISOString(),
+            })),
+            achievementPosts: user.achievementPosts.map((post) => ({
+              ...post,
+              createdAt: post.createdAt.toISOString(),
+            })),
+            accounts: user.accounts,
+            _count: user._count,
+          };
+
+          return userRes;
+        }
+
+        return null;
       },
     }),
   ],
@@ -121,9 +141,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const dbUser = await prismadb.user.findUnique({
           where: { id: user.id },
           include: {
-            games: true,
+            games: {
+              select: {
+                game: true,
+              },
+            },
             gamePosts: true,
             achievementPosts: true,
+            _count: true,
             accounts: {
               select: {
                 id: true,
@@ -144,10 +169,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           token.underReview = dbUser.underReview;
           token.isAdmin = dbUser.isAdmin;
           token.createdAt = dbUser.createdAt;
-          token.games = dbUser.games;
+          token.games = dbUser.games.map((ufg) => ufg.game) as Game[];
           token.gamePosts = dbUser.gamePosts;
           token.achievementPosts = dbUser.achievementPosts;
           token.accounts = dbUser.accounts;
+          token._count = dbUser._count;
         }
       }
 
@@ -163,9 +189,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.underReview = token.underReview as boolean;
         session.user.isAdmin = token.isAdmin as boolean;
         session.user.createdAt = token.createdAt as string;
-        session.user.games = token.games as any[];
-        session.user.gamePosts = token.gamePosts as any[];
-        session.user.achievementPosts = token.achievementPosts as any[];
+        session.user.games = token.games as Game[];
+        session.user.gamePosts = token.gamePosts as GamePost[];
+        session.user.achievementPosts =
+          token.achievementPosts as AchievementPost[];
+        session.user._count = token._count as UserCount;
         session.user.accounts = token.accounts as any[];
       }
 

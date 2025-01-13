@@ -24,7 +24,6 @@ export async function GET(
             title: true,
             description: true,
             image: true,
-            isUnlocked: true,
             _count: {
               select: {
                 achievementPosts: true,
@@ -40,22 +39,7 @@ export async function GET(
       return NextResponse.json({ error: "Game not found" }, { status: 404 });
     }
 
-    const unlockedAchievementCount = await prismadb.achievement.count({
-      where: {
-        gameId: game.id,
-        isUnlocked: true,
-      },
-    });
-
-    const gameWithUnlockedAchievements = {
-      ...game,
-      _count: {
-        ...game._count,
-        unlockedAchievements: unlockedAchievementCount,
-      },
-    };
-
-    return NextResponse.json(gameWithUnlockedAchievements);
+    return NextResponse.json(game);
   } catch (error) {
     console.error("Error getting game: ", error);
     return NextResponse.json(

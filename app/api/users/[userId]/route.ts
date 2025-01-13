@@ -16,13 +16,7 @@ export async function GET(
         },
         games: {
           select: {
-            game: {
-              select: {
-                title: true,
-                image: true,
-                isCompleted: true,
-              },
-            },
+            game: true,
           },
         },
         gamePosts: true,
@@ -42,22 +36,7 @@ export async function GET(
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    const completedGameCount = await prismadb.userFavoriteGame.count({
-      where: {
-        userId: user.id,
-        game: { isCompleted: true },
-      },
-    });
-
-    const userWithCompletedGames = {
-      ...user,
-      _count: {
-        ...user._count,
-        completedGameCount,
-      },
-    };
-
-    return NextResponse.json(userWithCompletedGames);
+    return NextResponse.json(user);
   } catch (error) {
     console.error("Error getting user: ", error);
     return NextResponse.json(

@@ -32,30 +32,36 @@ const ExploreGames: React.FC<ExploreGamesProps> = ({ games }) => {
   return (
     <div className="flex flex-col items-center justify-center gap-3">
       <div className="flex flex-col gap-4 items-center h-[22rem] w-[16.5rem] rounded-md border-black border-2 bg-white overflow-y-auto">
-        <div className="flex justify-center bg-[#53285f] mt-2 w-60 h-8">
+        <div className="flex justify-center bg-[#53285f]/90 mt-2 w-60 h-8">
           <h1 className="font-semibold text-xl text-[#e7e7e7]">
             Explore Games
           </h1>
         </div>
         <div className="flex flex-col gap-4 pb-2 px-2 w-[100%]">
-          {randomGames.map((game) => (
-            <div key={game.id} className="flex flex-col gap-5">
-              <div className="flex justify-between">
-                <img className="w-12 h-12" src={game.image} alt={game.title} />
-                <div className="flex flex-grow items-center justify-center bg-gray-400">
-                  <h3 className="text-md text-center font-semibold">
-                    {game.title}
-                  </h3>
+          {randomGames.map((game) => {
+            return (
+              <div key={game.id} className="flex flex-col gap-5">
+                <div className="flex justify-between">
+                  <img
+                    className="w-12 h-12"
+                    src={game.image}
+                    alt={game.title}
+                  />
+                  <div className="flex flex-grow items-center justify-center bg-[#e7e7e7]">
+                    <h3 className="text-md text-center font-semibold">
+                      {game.title}
+                    </h3>
+                  </div>
+                </div>
+                <div className="flex justify-evenly">
+                  <div className="flex">
+                    Achievements: {game._count.achievements}
+                  </div>
+                  <div className="flex">Posts: {game._count.gamePosts}</div>
                 </div>
               </div>
-              <div className="flex justify-evenly">
-                <div className="flex">
-                  Achievements: {game._count.achievements}
-                </div>
-                <div className="flex">Posts: {game._count.gamePosts}</div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
