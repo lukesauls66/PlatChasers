@@ -139,7 +139,7 @@ async function seedGames(users: any[]) {
       create: {
         title: "Elden Ring",
         description:
-          "Elden Ring is a critically acclaimed action role-playing game developed by FromSoftware and published by Bandai Namco Entertainment. Set in the sprawling and visually breathtaking open world of the Lands Between, the game invites players to explore a richly detailed fantasy realm shaped by the collaborative storytelling of Hidetaka Miyazaki and George R.R. Martin. Players take on the role of a Tarnished, exiled and summoned back to the Lands Between to restore order by reclaiming the shattered pieces of the legendary Elden Ring and becoming the new Elden Lord. The game features deep lore, epic boss battles, and a high level of challenge, characteristic of FromSoftware titles.",
+          "Elden Ring is a critically acclaimed action role-playing game developed by FromSoftware and published by Bandai Namco Entertainment. Set in the sprawling and visually breathtaking open world of the Lands Between, the game invites players to explore a richly detailed fantasy realm shaped by the collaborative storytelling of Hidetaka Miyazaki and George R.R. Martin.",
         image: "https://i.ibb.co/mTXXGjp/elden-pic-preview.jpg",
         gamePosts: {
           create: [

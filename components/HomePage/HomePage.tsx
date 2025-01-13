@@ -6,15 +6,18 @@ import {
 } from "./HomePageSubsections";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { Game } from "@/types/game";
 
 const HomePage = () => {
   const { data: session, status } = useSession();
   const [games, setGames] = useState([]);
+  const [userGames, setUserGames] = useState<Game[] | null>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  console.log("user: ", session?.user);
   console.log("Games: ", games);
-  console.log("User counts: ", session?.user?._count);
+  console.log("User games: ", userGames);
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -29,11 +32,17 @@ const HomePage = () => {
       }
     };
 
+    setUserGames(session?.user?.games as Game[] | null);
+
     fetchGames();
-  }, []);
+  }, [session?.user?.games]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex items-center justify-center font-bold text-4xl pt-20">
+        Loading...
+      </div>
+    );
   }
 
   if (error) {
@@ -41,12 +50,12 @@ const HomePage = () => {
   }
 
   return (
-    <div>
+    <div className="pb-8">
       {status === "authenticated" ? (
         <div className="flex flex-col items-center gap-8 pt-8">
           <p className="text-2xl font-bold">Welcome!</p>
           <CompletedGames />
-          <FavoritedGames />
+          <FavoritedGames userGames={userGames} />
           <ExploreGames games={games} />
         </div>
       ) : (
