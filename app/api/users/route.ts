@@ -30,7 +30,11 @@ export async function GET() {
         _count: {
           select: { games: true, gamePosts: true, achievementPosts: true },
         },
-        games: true,
+        games: {
+          select: {
+            game: true,
+          },
+        },
         gamePosts: true,
         achievementPosts: true,
         accounts: {

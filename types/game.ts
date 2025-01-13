@@ -46,3 +46,9 @@ export interface Game {
     achievementPosts: number;
   };
 }
+
+export interface UserCount {
+  games: number;
+  gamePosts: number;
+  achievementPosts: number;
+}

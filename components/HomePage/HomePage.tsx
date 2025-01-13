@@ -8,12 +8,13 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 const HomePage = () => {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   console.log("Games: ", games);
+  console.log("User counts: ", session?.user?._count);
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -43,12 +44,14 @@ const HomePage = () => {
     <div>
       {status === "authenticated" ? (
         <div className="flex flex-col items-center gap-8 pt-8">
+          <p className="text-2xl font-bold">Welcome!</p>
           <CompletedGames />
           <FavoritedGames />
           <ExploreGames games={games} />
         </div>
       ) : (
-        <div className="flex flex-col items-center pt-8">
+        <div className="flex flex-col items-center gap-6 pt-6">
+          <p className="text-2xl font-bold">Welcome!</p>
           <ExploreGames games={games} />
         </div>
       )}

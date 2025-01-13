@@ -554,6 +554,13 @@ async function seedUserFavoriteGames(users: any[], games: any[]) {
 }
 
 async function main() {
+  await prisma.achievementPost.deleteMany();
+  await prisma.achievement.deleteMany();
+  await prisma.gamePost.deleteMany();
+  await prisma.game.deleteMany();
+  await prisma.userFavoriteGame.deleteMany();
+  await prisma.user.deleteMany();
+
   const users = await seedUsers();
   const games = await seedGames(users);
 

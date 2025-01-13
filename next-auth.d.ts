@@ -1,4 +1,5 @@
 import NextAuth, { DefaultSession, DefaultUser, DefaultJWT } from "next-auth";
+import { Game, GamePost, AchievementPost, UserCount } from "./types/game";
 
 declare module "next-auth" {
   interface Session {
@@ -11,9 +12,10 @@ declare module "next-auth" {
       underReview: boolean;
       isAdmin: boolean;
       createdAt: string;
-      games: any[];
-      gamePosts: any[];
-      achievementPosts: any[];
+      games: Game[];
+      gamePosts: GamePost[];
+      achievementPosts: AchievementPost[];
+      _count: UserCount;
       accounts: any[];
     } & DefaultSession["user"];
   }
@@ -27,9 +29,10 @@ declare module "next-auth" {
     underReview: boolean;
     isAdmin: boolean;
     createdAt: string;
-    games: any[];
-    gamePosts: any[];
-    achievementPosts: any[];
+    games: Game[];
+    gamePosts: GamePost[];
+    achievementPosts: AchievementPost[];
+    _count: UserCount;
     accounts: any[];
   }
 }
@@ -44,9 +47,10 @@ declare module "next-auth/jwt" {
     underReview: boolean;
     isAdmin: boolean;
     createdAt: string;
-    games: any[];
-    gamePosts: any[];
-    achievementPosts: any[];
+    games: Game[];
+    gamePosts: GamePost[];
+    achievementPosts: AchievementPost[];
+    _count: UserCount;
     accounts: any[];
   }
 }
