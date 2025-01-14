@@ -4,7 +4,13 @@ import currentUser from "@/app/actions/currentUser";
 
 export async function PUT(
   req: NextRequest,
-  context: { params: { achievementPostId: string } }
+  context: {
+    params: {
+      gameId: string;
+      achievementId: string;
+      achievementPostId: string;
+    };
+  }
 ) {
   const { achievementPostId } = context.params;
   const user = await currentUser();
@@ -50,7 +56,15 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { achievementPostId: string } }
+  {
+    params,
+  }: {
+    params: {
+      gameId: string;
+      achievementId: string;
+      achievementPostId: string;
+    };
+  }
 ) {
   const { achievementPostId } = await params;
   const user = await currentUser();
