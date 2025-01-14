@@ -1,3 +1,4 @@
 import Input from "./Input";
+import SearchBar from "./SearchBar";
 
-export default Input;
+export { Input, SearchBar };

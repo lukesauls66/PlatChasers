@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import Input from "../Util";
+import { Input } from "../Util";
 import { login } from "../LoginPage/LoginPage";
 import { useCallback, useState } from "react";
 import { useVariant } from "@/context/Variant";

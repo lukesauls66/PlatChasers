@@ -43,7 +43,7 @@ const FavoritedGames: React.FC<FavoritedGamesProps> = ({ userGames }) => {
                         className="flex justify-between"
                       >
                         <img
-                          className="w-12 h-12"
+                          className="w-[3.5rem] h-[3.5rem]"
                           src={game.image}
                           alt={game.title}
                         />

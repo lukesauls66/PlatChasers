@@ -1,6 +1,6 @@
 "use client";
 
-import Input from "../Util";
+import { Input } from "../Util";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useVariant } from "@/context/Variant";
