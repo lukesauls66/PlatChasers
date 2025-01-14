@@ -14,7 +14,6 @@ export async function GET() {
         email: {
           notIn: demoEmails,
         },
-        isAdmin: false,
       },
       select: {
         id: true,

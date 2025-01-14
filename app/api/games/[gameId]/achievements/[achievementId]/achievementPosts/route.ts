@@ -4,7 +4,7 @@ import currentUser from "@/app/actions/currentUser";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { achievementId: string } }
+  { params }: { params: Promise<{ gameId: string; achievementId: string }> }
 ) {
   const { achievementId } = await params;
   const user = await currentUser();
@@ -25,6 +25,7 @@ export async function POST(
         body,
         achievementId,
         userId: user?.id,
+        username: user?.username,
       },
     });
 

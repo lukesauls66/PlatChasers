@@ -1,5 +1,6 @@
 import { Achievement, Game } from "@/types/game";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 interface AchievementsSectionProps {
   game: Game | null;
@@ -25,17 +26,22 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({ game }) => {
             return (
               <div key={achievement.id}>
                 <div className="flex flex-col gap-4 bg-[#e7e7e7] p-2 border-black border-2 rounded-sm w-[15.4rem]">
-                  <div className="flex items-center justify-between">
-                    <img
-                      className="w-14 h-14"
-                      src={achievement.image}
-                      alt={achievement.title}
-                    />
-                    <div className="flex flex-grow items-center justify-center">
-                      <h3 className="text-md text-center font-semibold">
-                        {achievement.title}
-                      </h3>
-                    </div>
+                  <div>
+                    <Link
+                      href={`${game?.id}/achievements/${achievement.id}`}
+                      className="flex items-center justify-between"
+                    >
+                      <img
+                        className="w-14 h-14"
+                        src={achievement.image}
+                        alt={achievement.title}
+                      />
+                      <div className="flex flex-grow items-center justify-center">
+                        <h3 className="text-md text-center font-semibold">
+                          {achievement.title}
+                        </h3>
+                      </div>
+                    </Link>
                   </div>
                   <div className="flex">
                     <div className="flex flex-col gap-1 bg-[#e7e7e7] px-1 pb-1">

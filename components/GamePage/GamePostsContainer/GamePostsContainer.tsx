@@ -13,35 +13,35 @@ const GamePostsContainer: React.FC<GamePostsContainerProps> = ({ game }) => {
   const [gamePosts, setGamePosts] = useState<GamePost[]>([]);
 
   useEffect(() => {
-    const fetchUsernames = async () => {
+    const fetchGamePostUsernames = async () => {
       if (!game?.gamePosts) return;
 
-      const postsWithUsernames = await Promise.all(
+      const gamePostsWithUsernames = await Promise.all(
         game.gamePosts.map(async (post) => {
           try {
             const res = await axios.get(`/api/users/${post.userId}`);
             return { ...post, username: res.data.username };
           } catch (error) {
-            console.error("Error fetching username:", error);
+            console.error("Error fetching username for game posts:", error);
             return { ...post, username: "Unknown user" };
           }
         })
       );
 
-      setGamePosts(postsWithUsernames);
+      setGamePosts(gamePostsWithUsernames);
     };
 
-    fetchUsernames();
+    fetchGamePostUsernames();
   }, [game]);
 
-  const arePosts = gamePosts.length > 0;
+  const areGamePosts = gamePosts.length > 0;
 
   return (
     <div className="flex flex-col gap-4 items-center h-[20rem] w-[16.5rem] rounded-md border-black border-2 bg-white overflow-y-auto">
       <div className="sticky top-0 flex justify-center bg-[#53285f]/90 mt-2 pt-1 w-60 h-8 rounded-sm">
         <h1 className="font-semibold text-xl text-[#e7e7e7]">Game Posts</h1>
       </div>
-      {arePosts ? (
+      {areGamePosts ? (
         <div className="flex flex-col items-center gap-4 pb-2 px-2 w-[100%]">
           <Button
             variant={"destructive"}
@@ -83,7 +83,7 @@ const GamePostsContainer: React.FC<GamePostsContainerProps> = ({ game }) => {
           <Button
             variant={"destructive"}
             size={"lg"}
-            className="bg-[#53285f]/90 hover:bg-purple-700/80"
+            className="bg-[#ae3634] hover:bg-[#ae3634]/80"
           >
             Post
           </Button>

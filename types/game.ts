@@ -7,6 +7,7 @@ export interface AchievementPost {
   userId: string;
   achievementId: string;
   createdAt: string;
+  username?: string;
 }
 
 export interface Achievement {
