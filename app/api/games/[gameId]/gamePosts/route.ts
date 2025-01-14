@@ -4,7 +4,7 @@ import currentUser from "@/app/actions/currentUser";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { gameId: string } }
+  { params }: { params: Promise<{ gameId: string }> }
 ) {
   const { gameId } = await params;
   const user = await currentUser();

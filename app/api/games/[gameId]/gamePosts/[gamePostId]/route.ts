@@ -4,7 +4,7 @@ import currentUser from "@/app/actions/currentUser";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { gameId: string; gamePostId: string } }
+  { params }: { params: Promise<{ gameId: string; gamePostId: string }> }
 ) {
   const { gamePostId } = await params;
   const user = await currentUser();
@@ -50,7 +50,7 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { gameId: string; gamePostId: string } }
+  { params }: { params: Promise<{ gameId: string; gamePostId: string }> }
 ) {
   const { gamePostId } = await params;
   const user = await currentUser();
