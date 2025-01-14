@@ -135,9 +135,12 @@ model AchievementPost {
   dislikes      Int      @default(0)
   private       Boolean  @default(false)
   userId        String   @db.ObjectId
+  username      String?   
   achievementId String   @db.ObjectId
   createdAt     DateTime @default(now())
 
   user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   achievement Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
