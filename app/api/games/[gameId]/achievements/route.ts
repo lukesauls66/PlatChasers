@@ -41,6 +41,7 @@ export async function POST(
 
     return NextResponse.json(newAchievement, { status: 201 });
   } catch (error) {
+    console.error("Error creating new achievement:", error);
     return NextResponse.json({ error: "An error occurred" }, { status: 400 });
   }
 }

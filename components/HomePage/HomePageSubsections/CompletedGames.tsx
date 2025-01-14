@@ -16,15 +16,15 @@ const CompletedGames = () => {
     const fetchCompletedGames = async () => {
       try {
         const res = await axios.get(`api/users/${session?.user?.id}/games`);
-        console.log("Fetched complete game: ", res.data);
         setCompletedGames(res.data);
       } catch (error) {
+        console.error("Error fetching users completed games:", error);
         setError("Failed to fetch completed games");
       }
     };
 
     fetchCompletedGames();
-  }, []);
+  }, [session?.user?.id]);
 
   useEffect(() => {
     if (completedGames) {

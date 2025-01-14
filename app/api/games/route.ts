@@ -35,7 +35,6 @@ export async function GET() {
 
     return NextResponse.json(games);
   } catch (error) {
-    console.log("Error getting all games: ", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
@@ -81,6 +80,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(game, { status: 201 });
   } catch (error) {
+    console.error("Error creating new game:", error);
     return NextResponse.json({ error: "An error occurred" }, { status: 400 });
   }
 }

@@ -1,8 +1,10 @@
 "use client";
 
+import React from "react";
+
 interface InputProps {
   id: string;
-  onChange?: any;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
   label: string;
   type?: string;

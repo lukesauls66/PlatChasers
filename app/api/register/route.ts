@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import prismadb from "@/lib/prismadb";
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const { firstName, lastName, email, username, password } = await req.json();
@@ -65,6 +65,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(user, { status: 201 });
   } catch (error) {
+    console.error("Error creating new user:", error);
     return NextResponse.json({ error: "An error occurred" }, { status: 400 });
   }
 }

@@ -46,10 +46,6 @@ export async function PUT(
   try {
     const { title, description, image } = await req.json();
 
-    console.log(title);
-    console.log(description);
-    console.log(image);
-
     const existingAchievement = await prismadb.achievement.findUnique({
       where: { id: achievementId },
     });
@@ -69,8 +65,6 @@ export async function PUT(
         image,
       },
     });
-
-    console.log(updatedAchievement);
 
     return NextResponse.json(updatedAchievement);
   } catch (error) {

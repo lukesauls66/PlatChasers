@@ -31,11 +31,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             games: {
               select: {
                 game: true,
-                // _count: {
-                //   select: {
-                //     achievements: true
-                //   }
-                // }
               },
             },
             gamePosts: true,
@@ -44,7 +39,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             _count: true,
           },
         });
-        console.log("USER: ", user);
 
         if (!user || !user.hashedPassword) {
           throw new Error("Email does not exist");
@@ -95,7 +89,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ user, account }) {
-      console.log("Account: ", account, account?.provider);
       if (account?.provider && account?.provider !== "credentials") {
         const existingAccount = await prismadb.account.findUnique({
           where: {
@@ -106,8 +99,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           },
         });
 
-        console.log("Existing Account: ", existingAccount);
-
         if (existingAccount) {
           return true;
         }
@@ -115,8 +106,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const existingUser = await prismadb.user.findUnique({
           where: { email: user.email || "" },
         });
-
-        console.log("Existing User: ", existingUser);
 
         if (existingUser) {
           await prismadb.account.create({

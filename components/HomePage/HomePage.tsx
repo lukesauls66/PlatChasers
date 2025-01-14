@@ -24,6 +24,7 @@ const HomePage = () => {
         const res = await axios.get("/api/games");
         setGames(res.data);
       } catch (error) {
+        console.error("Error fetching games:", error);
         setError("Failed to fetch games");
       } finally {
         setLoading(false);
