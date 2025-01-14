@@ -9,6 +9,7 @@ import {
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { Game } from "@/types/game";
+import { SearchBar } from "../Util";
 
 const HomePage = () => {
   const { data: session, status } = useSession();
@@ -48,6 +49,7 @@ const HomePage = () => {
 
   return (
     <div className="pb-8">
+      <SearchBar games={games} />
       {status === "authenticated" ? (
         <div className="flex flex-col items-center gap-4 pt-4">
           <p className="text-lg font-bold font-it text-center italic">
