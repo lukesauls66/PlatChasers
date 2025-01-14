@@ -74,6 +74,7 @@ export async function POST(
 
     return NextResponse.json(updatedAchievement);
   } catch (error) {
+    console.error("Error updating achievement:", error);
     return NextResponse.json(
       { error: "Failed to unlock achievement" },
       { status: 500 }

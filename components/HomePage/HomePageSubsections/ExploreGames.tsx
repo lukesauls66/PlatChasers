@@ -10,12 +10,12 @@ interface ExploreGamesProps {
 }
 
 const shuffleArray = (array: Game[]): Game[] => {
-  let shuffledArray: Game[] = [...array];
+  const shuffledArray: Game[] = [...array];
 
   for (let i = shuffledArray.length - 1; i > 0; i--) {
     const j: number = Math.floor(Math.random() * (i + 1));
 
-    let temp: Game = shuffledArray[i];
+    const temp: Game = shuffledArray[i];
     shuffledArray[i] = shuffledArray[j];
     shuffledArray[j] = temp;
   }

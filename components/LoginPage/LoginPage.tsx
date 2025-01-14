@@ -22,14 +22,12 @@ export const login = async (
     });
 
     if (res?.error) {
-      console.log("Login failed: ", res.error);
       return false;
     }
 
-    console.log("Login successful: ", res);
     return true;
   } catch (error) {
-    console.log("ERROR: ", error);
+    console.error("ERROR: ", error);
     return false;
   }
 };
@@ -122,7 +120,7 @@ const LoginPage: React.FC = () => {
         </div>
 
         <div className="flex flex-col items-center gap-.5">
-          <p>Don't have an account?</p>
+          <p>Don&apos;t have an account?</p>
           <span
             onClick={() => setVariant("register")}
             className="hover:underline cursor-pointer font-bold"

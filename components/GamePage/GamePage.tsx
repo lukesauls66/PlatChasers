@@ -13,8 +13,6 @@ interface GamePageProps {
 const GamePage: React.FC<GamePageProps> = ({ gameId }) => {
   const [game, setGame] = useState<Game | null>(null);
 
-  console.log("Game: ", game);
-
   useEffect(() => {
     const fetchGame = async () => {
       const res = await axios.get(`/api/games/${gameId}`);
@@ -22,7 +20,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameId }) => {
     };
 
     fetchGame();
-  }, []);
+  }, [gameId]);
 
   return (
     <div className="flex flex-col items-center gap-6 p-6 bg-[#e7e7e7]">

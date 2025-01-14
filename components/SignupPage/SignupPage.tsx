@@ -25,7 +25,6 @@ const SignupPage: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [errors, setErrors] = useState<ValidationErrors>({});
-  console.log("Errors: ", errors);
 
   const register = useCallback(async () => {
     setErrors({});
@@ -75,9 +74,17 @@ const SignupPage: React.FC = () => {
       login(email, password);
       setVariant("home");
     } catch (error) {
-      console.log("ERROR: ", error);
+      console.error("ERROR: ", error);
     }
-  }, [firstName, lastName, email, username, password, login]);
+  }, [
+    firstName,
+    lastName,
+    email,
+    username,
+    password,
+    confirmPassword,
+    setVariant,
+  ]);
 
   return (
     <div className="flex flex-col gap-2 items-center bg-[#e7e7e7] min-h-screen">

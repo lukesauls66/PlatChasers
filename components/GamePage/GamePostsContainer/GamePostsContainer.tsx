@@ -22,6 +22,7 @@ const GamePostsContainer: React.FC<GamePostsContainerProps> = ({ game }) => {
             const res = await axios.get(`/api/users/${post.userId}`);
             return { ...post, username: res.data.username };
           } catch (error) {
+            console.error("Error fetching username:", error);
             return { ...post, username: "Unknown user" };
           }
         })

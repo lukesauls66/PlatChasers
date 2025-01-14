@@ -24,8 +24,6 @@ export async function GET(
       },
     });
 
-    console.log("Relations: ", completedGamesRelations);
-
     const completedGames = completedGamesRelations.map((favoritedGame) => ({
       id: favoritedGame.game.id,
       title: favoritedGame.game.title,
@@ -35,10 +33,9 @@ export async function GET(
       achievements: favoritedGame.game.achievements,
     }));
 
-    console.log("Games: ", completedGames);
-
     return NextResponse.json(completedGames);
   } catch (error) {
+    console.error("Error fetching completed games:", error);
     return NextResponse.json(
       { error: "Failed to fetch completed games" },
       { status: 500 }

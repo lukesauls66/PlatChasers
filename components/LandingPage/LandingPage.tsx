@@ -29,8 +29,6 @@ const LandingPage = () => {
     return null;
   }
 
-  console.log("VARIANT: ", variant);
-
   return (
     <div className="bg-[#e7e7e7] min-h-screen">
       {variant === "home" ? (

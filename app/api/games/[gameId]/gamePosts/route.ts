@@ -30,6 +30,7 @@ export async function POST(
 
     return NextResponse.json(post, { status: 201 });
   } catch (error) {
+    console.error("Error creating new game post:", error);
     return NextResponse.json({ error: "An error occurred" }, { status: 400 });
   }
 }

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useVariant } from "@/context/Variant";
-import { GiDiamondTrophy } from "react-icons/gi";
 import { GiTrophyCup } from "react-icons/gi";
 import Hamburger from "./Hamburger";
 
