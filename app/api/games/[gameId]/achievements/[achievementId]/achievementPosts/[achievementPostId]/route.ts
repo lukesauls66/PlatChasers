@@ -4,9 +4,9 @@ import currentUser from "@/app/actions/currentUser";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { achievementPostId: string } }
+  context: { params: { achievementPostId: string } }
 ) {
-  const { achievementPostId } = await params;
+  const { achievementPostId } = context.params;
   const user = await currentUser();
 
   try {
