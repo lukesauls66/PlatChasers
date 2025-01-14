@@ -21,7 +21,7 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({ game }) => {
       </div>
       {areAchievements ? (
         <div className="flex flex-col items-center gap-4 pb-2 px-2 w-[100%]">
-          {achievements.map((achievement, index) => {
+          {achievements.map((achievement) => {
             return (
               <div key={achievement.id}>
                 <div className="flex flex-col gap-4 bg-[#e7e7e7] p-2 border-black border-2 rounded-sm w-[15.4rem]">

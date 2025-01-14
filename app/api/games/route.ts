@@ -35,6 +35,7 @@ export async function GET() {
 
     return NextResponse.json(games);
   } catch (error) {
+    console.error("Error fetching games:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
