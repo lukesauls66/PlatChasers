@@ -57,7 +57,7 @@ const AchievementPostsContainer: React.FC<AchievementPostsContainerProps> = ({
     );
   };
 
-  const handlePostDelete = async (achievementPostId: string) => {
+  const handleDeletePost = async (achievementPostId: string) => {
     await axios.delete(
       `/api/games/${gameId}/achievements/${achievementId}/achievementPosts/${achievementPostId}`
     );
@@ -68,6 +68,8 @@ const AchievementPostsContainer: React.FC<AchievementPostsContainerProps> = ({
   };
 
   const areAchievementPosts = achievementPosts.length > 0;
+
+  const isAdmin = session?.user.isAdmin === true;
 
   return (
     <div className="flex flex-col gap-4 items-center h-[23rem] w-[16.5rem] rounded-md border-black border-2 bg-white overflow-y-auto">
@@ -109,7 +111,7 @@ const AchievementPostsContainer: React.FC<AchievementPostsContainerProps> = ({
                       <p>{post.dislikes}</p>
                     </div>
                   </div>
-                  {isOwner && (
+                  {(isOwner && (
                     <div className="flex justify-between">
                       <Button
                         variant={"destructive"}
@@ -126,12 +128,26 @@ const AchievementPostsContainer: React.FC<AchievementPostsContainerProps> = ({
                         variant={"destructive"}
                         size={"sm"}
                         className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem]"
-                        onClick={() => handlePostDelete(post.id)}
+                        onClick={() => handleDeletePost(post.id)}
                       >
                         Delete
                       </Button>
                     </div>
-                  )}
+                  )) ||
+                    (isAdmin && (
+                      <div className="flex justify-end">
+                        <Button
+                          variant={"destructive"}
+                          size={"sm"}
+                          className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem]"
+                          onClick={() => handleDeletePost(post.id)}
+                        >
+                          Delete
+                        </Button>
+                      </div>
+                    ))}
+                  {/* {isAdmin && (
+                  )} */}
                 </div>
                 {!isLastPost && <Separator className="mt-5 mb-1 bg-[#333]" />}
               </div>

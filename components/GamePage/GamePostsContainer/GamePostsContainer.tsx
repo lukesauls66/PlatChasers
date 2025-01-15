@@ -59,6 +59,8 @@ const GamePostsContainer: React.FC<GamePostsContainerProps> = ({
 
   const areGamePosts = gamePosts.length > 0;
 
+  const isAdmin = session?.user.isAdmin === true;
+
   return (
     <div className="flex flex-col gap-4 items-center h-[20rem] w-[16.5rem] rounded-md border-black border-2 bg-white overflow-y-auto">
       <div className="sticky top-0 flex justify-center bg-[#53285f]/90 mt-2 pt-1 w-60 h-8 rounded-sm">
@@ -97,7 +99,7 @@ const GamePostsContainer: React.FC<GamePostsContainerProps> = ({
                       <p>{post.dislikes}</p>
                     </div>
                   </div>
-                  {isOwner && (
+                  {(isOwner && (
                     <div className="flex justify-between">
                       <Button
                         variant={"destructive"}
@@ -119,7 +121,19 @@ const GamePostsContainer: React.FC<GamePostsContainerProps> = ({
                         Delete
                       </Button>
                     </div>
-                  )}
+                  )) ||
+                    (isAdmin && (
+                      <div className="flex justify-end">
+                        <Button
+                          variant={"destructive"}
+                          size={"sm"}
+                          className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem]"
+                          onClick={() => handlePostDelete(post.id)}
+                        >
+                          Delete
+                        </Button>
+                      </div>
+                    ))}
                 </div>
                 {!isLastPost && <Separator className="mt-5 mb-1 bg-[#333]" />}
               </div>
