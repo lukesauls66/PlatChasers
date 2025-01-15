@@ -48,6 +48,16 @@ const LoginPage: React.FC = () => {
     }
   };
 
+  const handleDemoLogin = async (demoEmail: string, demoPassword: string) => {
+    const res = await login(demoEmail, demoPassword);
+
+    if (res) {
+      setVariant("home");
+    } else {
+      setErrors("Invalid credentials");
+    }
+  };
+
   return (
     <div className="flex flex-col gap-2 items-center bg-[#e7e7e7] min-h-screen">
       <h1 className="text-2xl py-4 font-semibold">Sign In</h1>
@@ -81,6 +91,37 @@ const LoginPage: React.FC = () => {
             className="bg-[#53285f]/90 hover:bg-purple-700/80"
           >
             Sign In
+          </Button>
+        </div>
+
+        <div className="flex justify-evenly w-full">
+          <Button
+            onClick={() =>
+              handleDemoLogin("demo-good@example.com", "password1")
+            }
+            variant={"destructive"}
+            size={"lg"}
+            className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5.8rem]"
+          >
+            Good User
+          </Button>
+          <Button
+            onClick={() => handleDemoLogin("demo-bad@example.com", "password2")}
+            variant={"destructive"}
+            size={"lg"}
+            className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5.8rem]"
+          >
+            Bad User
+          </Button>
+          <Button
+            onClick={() =>
+              handleDemoLogin("demo-admin@example.com", "password3")
+            }
+            variant={"destructive"}
+            size={"lg"}
+            className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5.8rem]"
+          >
+            Demo Admin
           </Button>
         </div>
 
