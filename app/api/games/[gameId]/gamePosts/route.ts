@@ -25,6 +25,7 @@ export async function POST(
         body,
         gameId,
         userId: user?.id,
+        username: user?.username,
       },
     });
 
