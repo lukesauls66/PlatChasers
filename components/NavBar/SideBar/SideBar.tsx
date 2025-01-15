@@ -35,7 +35,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       <div
         className={`fixed top-0 right-0 h-full bg-[#c0bfbf] text-[#53285f] text-lg md:text-2xl font-bold transition-transform duration-300 ${
           isOpen ? "transform translate-x-0" : "transform translate-x-full"
-        } w-[160px] md:w-[280px] py-4 px-2 z-40`}
+          } w-[11rem] md:w-[280px] py-4 px-2 z-40`}
       >
         {status === "authenticated" && isAdmin ? (
           <div className="flex flex-col items-center h-[95vh] justify-between">
