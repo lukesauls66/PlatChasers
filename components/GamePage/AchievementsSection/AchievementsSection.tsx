@@ -1,3 +1,5 @@
+"use client";
+
 import { Achievement, Game } from "@/types/game";
 import { useEffect, useState } from "react";
 import Link from "next/link";

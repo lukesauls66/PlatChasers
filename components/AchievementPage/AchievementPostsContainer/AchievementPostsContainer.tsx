@@ -146,8 +146,6 @@ const AchievementPostsContainer: React.FC<AchievementPostsContainerProps> = ({
                         </Button>
                       </div>
                     ))}
-                  {/* {isAdmin && (
-                  )} */}
                 </div>
                 {!isLastPost && <Separator className="mt-5 mb-1 bg-[#333]" />}
               </div>

@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Game, GamePost } from "@/types/game";
 import axios from "axios";
