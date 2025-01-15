@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Achievement, AchievementPost } from "@/types/game";
-import { User } from "@prisma/client";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
@@ -27,12 +26,6 @@ const AchievementPostsContainer: React.FC<AchievementPostsContainerProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<AchievementPost | null>(null);
   const { data: session } = useSession();
-
-  console.log("Session user: ", session?.user);
-
-  console.log("Achievement: ", achievement);
-  console.log("Achievement posts: ", achievementPosts);
-  console.log("Modal: ", isModalOpen);
 
   useEffect(() => {
     const fetchAchievementPostUsernames = async () => {

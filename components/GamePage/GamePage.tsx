@@ -36,7 +36,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameId }) => {
       </div>
       <p className="text-center">{game?.description}</p>
       <AchievementsSection game={game} />
-      <GamePostsContainer game={game} />
+      <GamePostsContainer gameId={gameId} game={game} />
     </div>
   );
 };

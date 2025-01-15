@@ -1,20 +1,18 @@
 import axios from "axios";
 import { useState } from "react";
 import { PostModal } from "../Util";
-import { AchievementPost } from "@/types/game";
+import { GamePost } from "@/types/game";
 
-interface AchievementPostModalProps {
+interface GamePostModalProps {
   gameId: string;
-  achievementId: string;
   onClose: () => void;
-  addPost: (newPost: AchievementPost) => void;
-  editingPost?: AchievementPost | null;
-  submitEdit?: (updatedPost: AchievementPost) => void;
+  addPost: (newPost: GamePost) => void;
+  editingPost?: GamePost | null;
+  submitEdit?: (updatedPost: GamePost) => void;
 }
 
-const AchievementPostModal: React.FC<AchievementPostModalProps> = ({
+const GamePostModal: React.FC<GamePostModalProps> = ({
   gameId,
-  achievementId,
   onClose,
   addPost,
   editingPost,
@@ -30,19 +28,16 @@ const AchievementPostModal: React.FC<AchievementPostModalProps> = ({
     try {
       if (isEditing && editingPost && submitEdit) {
         const res = await axios.put(
-          `/api/games/${gameId}/achievements/${achievementId}/achievementPosts/${editingPost.id}`,
+          `/api/games/${gameId}/gamePosts/${editingPost.id}`,
           { body }
         );
 
         const updatedPost = res.data;
         submitEdit(updatedPost);
       } else {
-        const res = await axios.post(
-          `/api/games/${gameId}/achievements/${achievementId}/achievementPosts`,
-          {
-            body,
-          }
-        );
+        const res = await axios.post(`/api/games/${gameId}/gamePosts`, {
+          body,
+        });
 
         const newPost = res.data;
         addPost(newPost);
@@ -50,7 +45,7 @@ const AchievementPostModal: React.FC<AchievementPostModalProps> = ({
 
       onClose();
     } catch (error) {
-      console.error("Error making new achievement post:", error);
+      console.error("Error making new game post: ", error);
     }
   };
 
@@ -65,4 +60,4 @@ const AchievementPostModal: React.FC<AchievementPostModalProps> = ({
   );
 };
 
-export default AchievementPostModal;
+export default GamePostModal;

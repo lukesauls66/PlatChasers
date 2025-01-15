@@ -4,35 +4,58 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { IoIosThumbsUp, IoIosThumbsDown } from "react-icons/io";
+import { useSession } from "next-auth/react";
+import { GamePostModal } from "@/components/PostsModals";
 
 interface GamePostsContainerProps {
+  gameId: string;
   game: Game | null;
 }
 
-const GamePostsContainer: React.FC<GamePostsContainerProps> = ({ game }) => {
+const GamePostsContainer: React.FC<GamePostsContainerProps> = ({
+  gameId,
+  game,
+}) => {
   const [gamePosts, setGamePosts] = useState<GamePost[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingPost, setEditingPost] = useState<GamePost | null>(null);
+  const { data: session } = useSession();
 
   useEffect(() => {
     const fetchGamePostUsernames = async () => {
       if (!game?.gamePosts) return;
 
-      const gamePostsWithUsernames = await Promise.all(
-        game.gamePosts.map(async (post) => {
-          try {
-            const res = await axios.get(`/api/users/${post.userId}`);
-            return { ...post, username: res.data.username };
-          } catch (error) {
-            console.error("Error fetching username for game posts:", error);
-            return { ...post, username: "Unknown user" };
-          }
-        })
+      const newGamePosts = game.gamePosts;
+
+      newGamePosts.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
 
-      setGamePosts(gamePostsWithUsernames);
+      setGamePosts(newGamePosts);
     };
 
     fetchGamePostUsernames();
   }, [game]);
+
+  const handleModalOpen = () => setIsModalOpen(true);
+  const handleModalClose = () => setIsModalOpen(false);
+
+  const handleAddPost = async (newPost: GamePost) => {
+    setGamePosts((prev) => [newPost, ...prev]);
+  };
+
+  const handleEditPost = (updatedPost: GamePost) => {
+    setGamePosts((prev) =>
+      prev.map((post) => (post.id === updatedPost.id ? updatedPost : post))
+    );
+  };
+
+  const handlePostDelete = async (gamePostId: string) => {
+    await axios.delete(`/api/games/${game?.id}/gamePosts/${gamePostId}`);
+
+    setGamePosts((prev) => prev.filter((post) => post.id !== gamePostId));
+  };
 
   const areGamePosts = gamePosts.length > 0;
 
@@ -47,11 +70,14 @@ const GamePostsContainer: React.FC<GamePostsContainerProps> = ({ game }) => {
             variant={"destructive"}
             size={"lg"}
             className="bg-[#ae3634] hover:bg-[#ae3634]/80"
+            onClick={handleModalOpen}
           >
             Post
           </Button>
           {gamePosts.map((post, index) => {
             const isLastPost = index === gamePosts.length - 1;
+
+            const isOwner = post.userId === session?.user.id;
 
             return (
               <div key={post.id}>
@@ -71,6 +97,29 @@ const GamePostsContainer: React.FC<GamePostsContainerProps> = ({ game }) => {
                       <p>{post.dislikes}</p>
                     </div>
                   </div>
+                  {isOwner && (
+                    <div className="flex justify-between">
+                      <Button
+                        variant={"destructive"}
+                        size={"sm"}
+                        className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem]"
+                        onClick={() => {
+                          handleModalOpen();
+                          setEditingPost(post);
+                        }}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant={"destructive"}
+                        size={"sm"}
+                        className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem]"
+                        onClick={() => handlePostDelete(post.id)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  )}
                 </div>
                 {!isLastPost && <Separator className="mt-5 mb-1 bg-[#333]" />}
               </div>
@@ -84,10 +133,23 @@ const GamePostsContainer: React.FC<GamePostsContainerProps> = ({ game }) => {
             variant={"destructive"}
             size={"lg"}
             className="bg-[#ae3634] hover:bg-[#ae3634]/80"
+            onClick={handleModalOpen}
           >
             Post
           </Button>
         </div>
+      )}
+      {isModalOpen && (
+        <GamePostModal
+          gameId={gameId}
+          onClose={() => {
+            handleModalClose();
+            setEditingPost(null);
+          }}
+          addPost={handleAddPost}
+          editingPost={editingPost}
+          submitEdit={handleEditPost}
+        />
       )}
     </div>
   );
