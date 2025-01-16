@@ -1,10 +1,6 @@
 import prismadb from "@/lib/prismadb";
 import { NextResponse, NextRequest } from "next/server";
-import formidable from "formidable";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import { Readable } from "stream";
-import { IncomingMessage } from "http";
-import fs from "fs";
 
 export async function GET() {
   try {
@@ -67,63 +63,16 @@ const s3 = new S3Client({
   region: bucketRegion,
 });
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
-async function readableStreamToBuffer(
-  readableStream: ReadableStream
-): Promise<Buffer> {
-  const reader = readableStream.getReader();
-  const chunks: Uint8Array[] = [];
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    if (value) chunks.push(value);
-  }
-
-  return Buffer.concat(chunks);
-}
-
-async function requestToIncomingMessage(
-  req: Request
-): Promise<IncomingMessage> {
-  const bodyBuffer = await readableStreamToBuffer(req.body!);
-
-  const readable = new Readable();
-  readable._read = () => {};
-  readable.push(bodyBuffer);
-  readable.push(null);
-
-  const incomingMessage = readable as unknown as IncomingMessage;
-  incomingMessage.headers = Object.fromEntries(req.headers.entries());
-  return incomingMessage;
-}
-
 export async function POST(req: NextRequest) {
   try {
-    const incomingReq = await requestToIncomingMessage(req);
-    const form = formidable({ multiples: true });
+    const formData = await req.formData();
 
-    const parsedData = await new Promise<{ fields: any; files: any }>(
-      (resolve, reject) => {
-        form.parse(incomingReq, (err, fields, files) => {
-          if (err) reject(err);
-          else resolve({ fields, files });
-        });
-      }
-    );
-
-    const { fields, files } = parsedData;
-
-    const { title, description } = fields;
-    const image = files.image ? files.image[0] : null;
+    const title = formData.get("title") as string;
+    const description = formData.get("description") as string;
+    const image = formData.get("image") as File | null;
 
     const existingGame = await prismadb.game.findUnique({
-      where: { title: title[0] },
+      where: { title },
     });
 
     if (existingGame) {
@@ -146,24 +95,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Image is required" }, { status: 400 });
     }
 
-    if (!image.filepath || !image.mimetype) {
-      return NextResponse.json(
-        { error: "Invalid image file" },
-        { status: 400 }
-      );
-    }
-
-    const fileKey = `images/${Date.now()}_${image.originalFilename}`;
-    const fileBuffer = fs.readFileSync(image.filepath);
-
-    console.log("fileKey: ", fileKey);
-    console.log("fileBuffer: ", fileBuffer);
+    const fileKey = `images/${Date.now()}_${image.name}`;
 
     const uploadParams = {
       Bucket: bucketName,
       Key: fileKey,
-      Body: fileBuffer,
-      ContentType: image.mimetype,
+      Body: new Uint8Array(await image.arrayBuffer()),
+      ContentType: image.type,
     };
 
     const uploadCommand = new PutObjectCommand(uploadParams);
@@ -173,8 +111,8 @@ export async function POST(req: NextRequest) {
 
     const newGame = await prismadb.game.create({
       data: {
-        title: title[0],
-        description: description[0],
+        title,
+        description,
         image: imageUrl,
       },
     });

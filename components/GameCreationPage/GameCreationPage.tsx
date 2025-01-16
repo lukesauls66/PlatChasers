@@ -137,7 +137,6 @@ const GameCreationPage = () => {
     <div className="flex flex-col items-center py-5 h-[100%] bg-[#e7e7e7]">
       <h1 className="text-2xl font-bold">Create New Game</h1>
       <Separator className="mt-5 mb-7 bg-black w-[14rem]" />
-      {/* <form onSubmit={onSubmit} className="flex flex-col items-center gap-8"> */}
       <div className="flex flex-col items-center gap-8">
         <div className="flex flex-col items-center gap-2">
           <Input
@@ -182,11 +181,11 @@ const GameCreationPage = () => {
           <ul className="">
             {achievements.map((achievement, index) => (
               <div key={index}>
-                <li key={index} className="flex justify-center">
+                <li key={index} className="flex justify-evenly">
                   <strong>{achievement.title}</strong>:{" "}
                   {achievement.description}
                 </li>
-                <Separator className="bg-black w-[14rem] mt-6 mb-2" />
+                <Separator className="bg-black w-[14rem] my-4" />
               </div>
             ))}
           </ul>
@@ -239,7 +238,6 @@ const GameCreationPage = () => {
           Create
         </Button>
       </div>
-      {/* </form> */}
     </div>
   );
 };
