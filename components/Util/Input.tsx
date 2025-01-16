@@ -9,6 +9,7 @@ interface InputProps {
   label: string;
   type?: string;
   required?: boolean;
+  className?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -18,6 +19,7 @@ const Input: React.FC<InputProps> = ({
   label,
   type,
   required,
+  className,
 }) => {
   return (
     <div className="relative">
@@ -27,7 +29,7 @@ const Input: React.FC<InputProps> = ({
         value={value}
         id={id}
         required={required}
-        className="block rounded-md px-6 pt-6 pb-1 w-[18rem] text-md appearance-none focus:outline-none focus:ring-0 border-[1px] border-black peer"
+        className={`block rounded-md px-6 pt-6 pb-1 w-[14rem] text-md appearance-none focus:outline-none focus:ring-0 border-[1px] border-black peer ${className}`}
         placeholder=" "
       />
       <label
