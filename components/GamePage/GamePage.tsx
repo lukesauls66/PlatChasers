@@ -12,7 +12,6 @@ interface GamePageProps {
 
 const GamePage: React.FC<GamePageProps> = ({ gameId }) => {
   const [game, setGame] = useState<Game | null>(null);
-  console.log("game: ", game);
 
   useEffect(() => {
     const fetchGame = async () => {
@@ -32,7 +31,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameId }) => {
         <img
           className="w-[10rem] h-[10rem]"
           src={game?.image}
-          alt="Elden Ring"
+          alt={game?.title}
         />
       </div>
       <p className="text-center">{game?.description}</p>

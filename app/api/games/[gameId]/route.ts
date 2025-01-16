@@ -81,7 +81,6 @@ export async function PUT(
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
     const image = formData.get("image") as File | null;
-    // const { title, description, image } = await req.json();
 
     const existingGame = await prismadb.game.findUnique({
       where: { id: gameId },

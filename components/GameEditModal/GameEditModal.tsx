@@ -5,7 +5,6 @@ import { Button } from "../ui/button";
 import { Game } from "@/types/game";
 import { Input } from "../Util";
 import axios from "axios";
-import { Separator } from "../ui/separator";
 
 interface GameEditModalProps {
   onClose: () => void;
