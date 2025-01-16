@@ -57,14 +57,14 @@ export async function DELETE(
 
   try {
     const post = await prismadb.gamePost.findUnique({
-      where: { id: gamePostId, userId: user?.id },
+      where: { id: gamePostId },
     });
 
     if (!post) {
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
     }
 
-    if (!user || user.id !== post.userId) {
+    if (!user || (user.id !== post.userId && user.isAdmin !== true)) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
