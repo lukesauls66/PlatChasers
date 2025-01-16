@@ -12,7 +12,7 @@ interface GamePageProps {
 
 const GamePage: React.FC<GamePageProps> = ({ gameId }) => {
   const [game, setGame] = useState<Game | null>(null);
-  console.log("image: ", game?.image);
+  console.log("game: ", game);
 
   useEffect(() => {
     const fetchGame = async () => {

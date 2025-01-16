@@ -65,6 +65,7 @@ export async function POST(
 
     const uploadCommand = new PutObjectCommand(uploadParams);
     await s3.send(uploadCommand);
+
     const imageUrl = `https://${bucketName}.s3.${bucketRegion}.amazonaws.com/${fileKey}`;
 
     const newAchievement = await prismadb.achievement.create({

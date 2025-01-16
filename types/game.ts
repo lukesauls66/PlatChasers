@@ -7,7 +7,7 @@ export interface AchievementPost {
   userId: string;
   achievementId: string;
   createdAt: string;
-  username?: string;
+  username?: string | null;
 }
 
 export interface Achievement {
@@ -31,7 +31,7 @@ export interface GamePost {
   userId: string;
   gameId: string;
   createdAt: string;
-  username?: string;
+  username?: string | null;
 }
 
 export interface Game {
