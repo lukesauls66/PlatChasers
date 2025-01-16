@@ -5,14 +5,22 @@ import { Input } from "../Util";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
 
-interface NewValidationErrors {
-  title?: string;
-  description?: string;
+interface NewGameValidationErrors {
+  gameTitle?: string;
+  gameDescription?: string;
+}
+
+interface NewAchievementErrors {
+  achievementTitle?: string;
+  achievementDescription?: string;
 }
 
 interface Errors {
-  title?: string;
-  description?: string;
+  gameTitle?: string;
+  gameDescription?: string;
+  achievementTitle?: string;
+  achievementDescription?: string;
+  achievementForm?: string;
 }
 
 interface Achievement {
@@ -36,14 +44,32 @@ const GameCreationPage = () => {
   const [errors, setErrors] = useState<Errors>({});
 
   const gameCreationValidationErrors = (title: string, description: string) => {
-    const newValidationErrors: NewValidationErrors = {};
+    const newValidationErrors: NewGameValidationErrors = {};
 
     if (title[0] !== title[0].toUpperCase()) {
-      newValidationErrors.title = "Title must be capitalized";
+      newValidationErrors.gameTitle = "Title must be capitalized";
     }
 
     if (description.length > 300) {
-      newValidationErrors.description =
+      newValidationErrors.gameDescription =
+        "Description must be less than 300 characters";
+    }
+
+    return newValidationErrors;
+  };
+
+  const achievementCreationValidationErrors = (
+    title: string,
+    description: string
+  ) => {
+    const newValidationErrors: NewAchievementErrors = {};
+
+    if (title[0] !== title[0].toUpperCase()) {
+      newValidationErrors.achievementTitle = "Title must be capitalized";
+    }
+
+    if (description.length > 300) {
+      newValidationErrors.achievementDescription =
         "Description must be less than 300 characters";
     }
 
@@ -84,7 +110,7 @@ const GameCreationPage = () => {
         router.push(`${game.id}`);
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.error("Error submitting game:", error);
       setErrors((prevErrors) => ({
         ...prevErrors,
         serverError: "An unexpected error occurred",
@@ -113,6 +139,18 @@ const GameCreationPage = () => {
       newAchievementImage
     ) {
       try {
+        setErrors({});
+
+        const achievementCreationErrors = achievementCreationValidationErrors(
+          newAchievementTitle,
+          newAchievementDescription
+        );
+
+        if (Object.keys(achievementCreationErrors).length > 0) {
+          setErrors(achievementCreationErrors);
+          return;
+        }
+
         setAchievements((prev) => [
           ...prev,
           {
@@ -128,6 +166,8 @@ const GameCreationPage = () => {
       } catch (error) {
         console.error("Error adding achievement: ", error);
       }
+    } else {
+      setErrors({ achievementForm: "Must fill out entire form" });
     }
   };
 
@@ -138,7 +178,7 @@ const GameCreationPage = () => {
       <h1 className="text-2xl font-bold">Create New Game</h1>
       <Separator className="mt-5 mb-7 bg-black w-[14rem]" />
       <div className="flex flex-col items-center gap-8">
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-.5">
           <Input
             label="Game Title"
             type="title"
@@ -150,20 +190,19 @@ const GameCreationPage = () => {
             }
             className="w-[16rem] border-[#53285f] border-[2px]"
           />
-          {errors?.title && <p className="text-[#ae3634]">{errors.title}</p>}
-          <Input
-            label="Game Description"
-            type="description"
-            id="description"
+          {errors?.gameTitle && (
+            <p className="text-[#ae3634]">{errors.gameTitle}</p>
+          )}
+          <textarea
+            className="w-full h-[8rem] p-2 border-2 border-black rounded-md my-2"
+            rows={4}
             value={description}
             required
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setDescription(e.target.value)
-            }
-            className="w-[16rem] border-[#53285f] border-[2px]"
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Write game description here..."
           />
-          {errors?.description && (
-            <p className="text-[#ae3634]">{errors.description}</p>
+          {errors?.gameDescription && (
+            <p className="text-[#ae3634]">{errors.gameDescription}</p>
           )}
           <Input
             label="Game Preview Image"
@@ -190,7 +229,7 @@ const GameCreationPage = () => {
             ))}
           </ul>
         )}
-        <div className="flex flex-col items-center justify-center gap-2 border-black border-[3px] w-[15.5rem] h-[18rem] p-2">
+        <div className="flex flex-col items-center justify-center gap-2 border-black border-[3px] w-[15.5rem] h-[20rem] p-2">
           <Input
             label="Achievement Title"
             type="text"
@@ -199,18 +238,21 @@ const GameCreationPage = () => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setNewAchievementTitle(e.target.value)
             }
-            className="w-[13rem] border-[#53285f] border-[2px]"
+            className="w-full border-[#53285f] border-[2px]"
           />
-          <Input
-            label="Achievement Description"
-            type="text"
-            id="achievementDescription"
+          {errors?.achievementTitle && (
+            <p className="text-[#ae3634]">{errors.achievementTitle}</p>
+          )}
+          <textarea
+            className="w-full h-[8rem] p-2 border-2 border-black rounded-md"
+            rows={4}
             value={newAchievementDescription}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setNewAchievementDescription(e.target.value)
-            }
-            className="w-[13rem] border-[#53285f] border-[2px]"
+            onChange={(e) => setNewAchievementDescription(e.target.value)}
+            placeholder="Write achievement description here..."
           />
+          {errors?.achievementDescription && (
+            <p className="text-[#ae3634]">{errors.achievementDescription}</p>
+          )}
           <Input
             label="Achievement Image"
             type="file"
@@ -218,8 +260,11 @@ const GameCreationPage = () => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setNewAchievementImage(e.target.files ? e.target.files[0] : null)
             }
-            className="bg-white w-[13rem] border-[#53285f] border-[2px]"
+            className="bg-white w-full border-[#53285f] border-[2px]"
           />
+          {errors.achievementForm && (
+            <p className="text-[#ae3634]">{errors.achievementForm}</p>
+          )}
           <Button
             variant={"destructive"}
             size={"lg"}

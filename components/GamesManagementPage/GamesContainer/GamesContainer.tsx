@@ -2,8 +2,10 @@ import { Game } from "@/types/game";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import React from "react";
+import GameEditModal from "@/components/GameEditModal";
+import axios from "axios";
 
 interface GamesContainerProps {
   games: Game[];
@@ -11,9 +13,27 @@ interface GamesContainerProps {
 
 const GamesContainer: React.FC<GamesContainerProps> = ({ games }) => {
   const router = useRouter();
+  const [listGames, setListGames] = useState<Game[]>(games);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingGame, setEditingGame] = useState<Game | null>(null);
+
+  const handleModalOpen = () => setIsModalOpen(true);
+  const handleModalClose = () => setIsModalOpen(false);
 
   const handleAddGameClick = () => {
     router.push("/games/create");
+  };
+
+  const handleEditGame = (updatedGame: Game) => {
+    setListGames((prev) =>
+      prev.map((game) => (game.id === updatedGame.id ? updatedGame : game))
+    );
+  };
+
+  const handleGameDelete = async (gameId: string) => {
+    await axios.delete(`/api/games/${gameId}`);
+
+    setListGames((prev) => prev.filter((game) => game.id !== gameId));
   };
 
   return (
@@ -30,7 +50,7 @@ const GamesContainer: React.FC<GamesContainerProps> = ({ games }) => {
       </Button>
       <Separator className="bg-black w-[16rem] my-10" />
       <div className="flex flex-col">
-        {games.map((game, index) => {
+        {listGames.map((game, index) => {
           const isLastGame = index === games.length - 1;
 
           return (
@@ -57,6 +77,10 @@ const GamesContainer: React.FC<GamesContainerProps> = ({ games }) => {
                     variant={"destructive"}
                     size={"sm"}
                     className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem]"
+                    onClick={() => {
+                      handleModalOpen();
+                      setEditingGame(game);
+                    }}
                   >
                     Edit
                   </Button>
@@ -64,16 +88,27 @@ const GamesContainer: React.FC<GamesContainerProps> = ({ games }) => {
                     variant={"destructive"}
                     size={"sm"}
                     className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem]"
+                    onClick={() => handleGameDelete(game.id)}
                   >
                     Delete
                   </Button>
                 </div>
               </div>
-              {!isLastGame && <Separator className="bg-black w-[16rem] my-8" />}
+              <Separator className="bg-black w-[16rem] my-8" />
             </div>
           );
         })}
       </div>
+      {isModalOpen && (
+        <GameEditModal
+          onClose={() => {
+            handleModalClose();
+            setEditingGame(null);
+          }}
+          editingGame={editingGame}
+          submitEdit={handleEditGame}
+        />
+      )}
     </div>
   );
 };
