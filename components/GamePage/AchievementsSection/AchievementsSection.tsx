@@ -10,9 +10,13 @@ import axios from "axios";
 
 interface AchievementsSectionProps {
   game: Game | null;
+  isFavorited: boolean;
 }
 
-const AchievementsSection: React.FC<AchievementsSectionProps> = ({ game }) => {
+const AchievementsSection: React.FC<AchievementsSectionProps> = ({
+  game,
+  isFavorited,
+}) => {
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingAchievement, setEditingAchievement] =
@@ -53,6 +57,11 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({ game }) => {
     isUnlocked: boolean
   ) => {
     if (!session?.user?.id) return;
+
+    if (!isFavorited) {
+      alert("Please favorite this game to start tracking progress");
+      return;
+    }
 
     try {
       if (isUnlocked) {
@@ -101,8 +110,10 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({ game }) => {
         <div className="flex flex-col items-center gap-4 pb-2 px-2 w-[100%]">
           {achievements.map((achievement) => {
             const isUnlocked =
-              achievement.unlockedBy.length > 0 &&
-              achievement.unlockedBy[0]?.isUnlocked;
+              Array.isArray(achievement.unlockedBy) &&
+              achievement.unlockedBy.length > 0
+                ? achievement.unlockedBy[0]?.isUnlocked
+                : false;
 
             return (
               <div key={achievement.id}>
@@ -186,7 +197,9 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({ game }) => {
           )}
         </div>
       ) : (
-        <h2>No achievements to view at this time.</h2>
+        <h2 className="text-lg font-semibold pt-[4rem] text-center">
+          No achievements to view at this time.
+        </h2>
       )}
     </div>
   );

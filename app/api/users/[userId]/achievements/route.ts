@@ -6,9 +6,10 @@ export async function POST(
   { params }: { params: Promise<{ userId: string }> }
 ) {
   const { userId } = await params;
-  const { achievementId, isUnlocked } = await req.json();
 
   try {
+    const { achievementId, isUnlocked } = await req.json();
+
     const achievement = await prismadb.achievement.findUnique({
       where: { id: achievementId },
     });
