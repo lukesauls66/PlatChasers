@@ -92,7 +92,7 @@ const GameCreationPage = () => {
       const game = await res.data;
 
       if (game.id) {
-        for (let achievement of achievements) {
+        for (const achievement of achievements) {
           if (achievement.image) {
             const achievementFormData = new FormData();
 

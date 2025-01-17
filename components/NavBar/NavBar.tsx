@@ -28,5 +28,3 @@ const NavBar: React.FC = () => {
 };
 
 export default NavBar;
-
-// purple-600

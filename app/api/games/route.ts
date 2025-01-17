@@ -1,9 +1,12 @@
 import prismadb from "@/lib/prismadb";
 import { NextResponse, NextRequest } from "next/server";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import currentUser from "@/app/actions/currentUser";
 
 export async function GET() {
   try {
+    const user = await currentUser();
+
     const games = await prismadb.game.findMany({
       select: {
         id: true,
@@ -26,6 +29,14 @@ export async function GET() {
               },
             },
             achievementPosts: true,
+            unlockedBy: {
+              where: {
+                userId: user?.id,
+              },
+              select: {
+                isUnlocked: true,
+              },
+            },
           },
         },
       },

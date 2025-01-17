@@ -2,12 +2,10 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import { SearchBar } from "../Util";
 import GamesContainer from "./GamesContainer";
 
 const GamesManagementPage = () => {
-  const { data: session, status } = useSession();
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

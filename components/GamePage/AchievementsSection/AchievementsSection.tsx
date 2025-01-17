@@ -48,6 +48,34 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({ game }) => {
     );
   };
 
+  const toggleIsUnlocked = async (
+    achievementId: string,
+    isUnlocked: boolean
+  ) => {
+    if (!session?.user?.id) return;
+
+    try {
+      if (isUnlocked) {
+        await axios.delete(
+          `/api/users/${session.user.id}/achievements?achievementId=${achievementId}`
+        );
+      } else {
+        await axios.post(`/api/users/${session.user.id}/achievements`, {
+          achievementId,
+          isUnlocked: true,
+        });
+      }
+
+      const res = await axios.get(`/api/games/${game?.id}`);
+      setAchievements(res.data.achievements ?? []);
+    } catch (error) {
+      console.error(
+        `Error ${isUnlocked ? "locking" : " unlocking"} achievement`,
+        error
+      );
+    }
+  };
+
   const areAchievements = achievements.length > 0;
 
   const isAdmin = session?.user.isAdmin === true;
@@ -72,6 +100,10 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({ game }) => {
       {areAchievements ? (
         <div className="flex flex-col items-center gap-4 pb-2 px-2 w-[100%]">
           {achievements.map((achievement) => {
+            const isUnlocked =
+              achievement.unlockedBy.length > 0 &&
+              achievement.unlockedBy[0]?.isUnlocked;
+
             return (
               <div key={achievement.id}>
                 <div className="flex flex-col gap-4 bg-[#e7e7e7] p-2 border-black border-2 rounded-sm w-[15.4rem]">
@@ -81,9 +113,17 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({ game }) => {
                       className="flex items-center justify-between"
                     >
                       <img
-                        className="w-14 h-14"
-                        src={achievement.image}
+                        className="w-14 h-14 cursor-pointer"
+                        src={
+                          isUnlocked
+                            ? achievement.image
+                            : "/images/locked-achievement.png"
+                        }
                         alt={achievement.title}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          toggleIsUnlocked(achievement.id, isUnlocked);
+                        }}
                       />
                       <div className="flex flex-grow items-center justify-center">
                         <h3 className="text-md text-center font-semibold">
@@ -111,7 +151,6 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({ game }) => {
                         onClick={() => {
                           handleModalOpen();
                           setEditingAchievement(achievement);
-                          console.log("Achievement: ", achievement);
                         }}
                       >
                         Edit
