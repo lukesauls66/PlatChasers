@@ -1,3 +1,10 @@
+export interface UserFavoriteGame {
+  id: string;
+  gameId: string;
+  userId: string;
+  isCompleted: boolean;
+}
+
 export interface AchievementPost {
   id: string;
   body: string;
@@ -43,9 +50,10 @@ export interface Game {
   description: string;
   image: string;
   isCompleted: boolean;
-  gamePosts: GamePost[];
-  achievements: Achievement[];
-  _count: {
+  gamePosts?: GamePost[];
+  achievements?: Achievement[];
+  favoritedBy?: UserFavoriteGame[];
+  _count?: {
     gamePosts: number;
     achievements: number;
     achievementPosts: number;

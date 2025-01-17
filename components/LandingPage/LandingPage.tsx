@@ -16,12 +16,23 @@ const LandingPage = () => {
 
   useEffect(() => {
     if (isClient) {
-      const queryParams = new URLSearchParams(window.location.search);
-      const variantQuery = queryParams.get("Variant");
+      const updateVariant = () => {
+        const queryParams = new URLSearchParams(window.location.search);
+        const variantQuery = queryParams.get("Variant");
 
-      if (variantQuery) {
-        setVariant(variantQuery);
-      }
+        if (variantQuery) {
+          setVariant(variantQuery);
+        }
+      };
+
+      updateVariant();
+
+      const handlePopState = () => updateVariant();
+      window.addEventListener("popstate", handlePopState);
+
+      return () => {
+        window.removeEventListener("popstate", handlePopState);
+      };
     }
   }, [isClient, setVariant]);
 

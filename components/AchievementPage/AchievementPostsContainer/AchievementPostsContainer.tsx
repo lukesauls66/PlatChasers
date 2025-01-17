@@ -79,7 +79,7 @@ const AchievementPostsContainer: React.FC<AchievementPostsContainerProps> = ({
       </div>
       {areAchievementPosts ? (
         <div className="flex flex-col items-center gap-4 pb-2 px-2 w-[100%]">
-          {session?.user.underReview === false ? (
+          {session?.user && session?.user.underReview === false ? (
             <Button
               variant={"destructive"}
               size={"lg"}
@@ -148,16 +148,24 @@ const AchievementPostsContainer: React.FC<AchievementPostsContainerProps> = ({
           })}
         </div>
       ) : (
-        <div className="flex flex-col gap-6 pt-[5rem]">
-          <p className="text-xl italic">Make the First Post</p>
-          <Button
-            variant={"destructive"}
-            size={"lg"}
-            className="bg-[#ae3634] hover:bg-[#ae3634]/80"
-            onClick={handleModalOpen}
-          >
-            Post
-          </Button>
+        <div>
+          {session?.user ? (
+            <div className="flex flex-col gap-6 pt-[5rem]">
+              <p className="text-xl italic">Make the First Post</p>
+              <Button
+                variant={"destructive"}
+                size={"lg"}
+                className="bg-[#ae3634] hover:bg-[#ae3634]/80"
+                onClick={handleModalOpen}
+              >
+                Post
+              </Button>
+            </div>
+          ) : (
+            <div className="flex pt-[5rem]">
+              <p className="text-lg font-semibold">Sign in to start posting!</p>
+            </div>
+          )}
         </div>
       )}
       {isModalOpen && (
