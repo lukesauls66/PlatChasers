@@ -90,7 +90,7 @@ const GamePage: React.FC<GamePageProps> = ({ gameId }) => {
         </div>
       )}
       <p className="text-center">{game?.description}</p>
-      <AchievementsSection game={game} />
+      <AchievementsSection game={game} isFavorited={isFavorited} />
       <GamePostsContainer gameId={gameId} game={game} />
     </div>
   );

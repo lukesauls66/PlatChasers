@@ -128,7 +128,7 @@ const AchievementPostAndEditModal: React.FC<
           {isEditing ? "Update Achievement" : "Create New Achievement"}
         </h1>
         <Input
-          label="Game Title"
+          label="Achievement Title"
           type="text"
           id="title"
           value={title}
@@ -145,13 +145,13 @@ const AchievementPostAndEditModal: React.FC<
           value={description}
           required
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Write game description here..."
+          placeholder="Write achievement description here..."
         />
         {errors?.description && (
           <p className="text-[#ae3634]">{errors.description}</p>
         )}
         <Input
-          label="Game Preview Image"
+          label="Achievement Preview Image"
           type="file"
           id="image"
           required
