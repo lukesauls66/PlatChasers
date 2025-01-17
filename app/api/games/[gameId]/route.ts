@@ -22,6 +22,11 @@ export async function GET(
           },
         },
         gamePosts: true,
+        favoritedBy: {
+          select: {
+            userId: true,
+          },
+        },
         achievements: {
           select: {
             id: true,
