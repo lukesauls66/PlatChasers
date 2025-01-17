@@ -1,6 +1,6 @@
 "use client";
 
-import { Achievement, Game } from "@/types/game";
+import { Achievement } from "@/types/game";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import AchievementPostsContainer from "./AchievementPostsContainer";
@@ -16,15 +16,9 @@ const AchievementPage: React.FC<AchievementPageProps> = ({
   gameId,
   achievementId,
 }) => {
-  const [game, setGame] = useState<Game | null>(null);
   const [achievement, setAchievement] = useState<Achievement | null>(null);
 
   useEffect(() => {
-    const fetchGame = async () => {
-      const res = await axios.get(`/api/games/${gameId}`);
-      setGame(res.data);
-    };
-
     const fetchAchievement = async () => {
       const res = await axios.get(
         `/api/games/${gameId}/achievements/${achievementId}`
@@ -32,7 +26,6 @@ const AchievementPage: React.FC<AchievementPageProps> = ({
       setAchievement(res.data);
     };
 
-    fetchGame();
     fetchAchievement();
   }, [achievementId, gameId]);
 

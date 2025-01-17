@@ -6,7 +6,6 @@ export async function GET(
   { params }: { params: Promise<{ userId: string }> }
 ) {
   const { userId } = await params;
-  console.log("user id: ", userId);
 
   try {
     const user = await prismadb.user.findUnique({

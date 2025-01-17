@@ -64,7 +64,6 @@ export async function PUT(
   const { achievementId } = await params;
 
   try {
-    // const { title, description, image } = await req.json();
     const formData = await req.formData();
 
     const title = formData.get("title") as string;

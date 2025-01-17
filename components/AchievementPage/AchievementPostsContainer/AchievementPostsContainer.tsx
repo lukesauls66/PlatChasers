@@ -5,7 +5,6 @@ import { Achievement, AchievementPost } from "@/types/game";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
-import { IoIosThumbsUp, IoIosThumbsDown } from "react-icons/io";
 import { AchievementPostModal } from "@/components/PostsModals";
 import { useSession } from "next-auth/react";
 
@@ -80,14 +79,16 @@ const AchievementPostsContainer: React.FC<AchievementPostsContainerProps> = ({
       </div>
       {areAchievementPosts ? (
         <div className="flex flex-col items-center gap-4 pb-2 px-2 w-[100%]">
-          <Button
-            variant={"destructive"}
-            size={"lg"}
-            className="bg-[#ae3634] hover:bg-[#ae3634]/80"
-            onClick={handleModalOpen}
-          >
-            Post
-          </Button>
+          {session?.user.underReview === false ? (
+            <Button
+              variant={"destructive"}
+              size={"lg"}
+              className="bg-[#ae3634] hover:bg-[#ae3634]/80"
+              onClick={handleModalOpen}
+            >
+              Post
+            </Button>
+          ) : null}
           {achievementPosts.map((post, index) => {
             const isLastPost = index === achievementPosts.length - 1;
 
@@ -101,37 +102,31 @@ const AchievementPostsContainer: React.FC<AchievementPostsContainerProps> = ({
                     <p className="text-sm italic">{post?.username}</p>
                   </div>
                   <p className="text-sm">{post.body}</p>
-                  <div className="flex justify-between">
-                    <div className="flex gap-2">
-                      <IoIosThumbsUp className="text-2xl" />
-                      <p>{post.likes}</p>
-                    </div>
-                    <div className="flex gap-2">
-                      <IoIosThumbsDown className="text-2xl" />
-                      <p>{post.dislikes}</p>
-                    </div>
-                  </div>
                   {(isOwner && (
-                    <div className="flex justify-between">
-                      <Button
-                        variant={"destructive"}
-                        size={"sm"}
-                        className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem]"
-                        onClick={() => {
-                          handleModalOpen();
-                          setEditingPost(post);
-                        }}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant={"destructive"}
-                        size={"sm"}
-                        className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem]"
-                        onClick={() => handleDeletePost(post.id)}
-                      >
-                        Delete
-                      </Button>
+                    <div>
+                      {session?.user.underReview === false ? (
+                        <div className="flex justify-between">
+                          <Button
+                            variant={"destructive"}
+                            size={"sm"}
+                            className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem]"
+                            onClick={() => {
+                              handleModalOpen();
+                              setEditingPost(post);
+                            }}
+                          >
+                            Edit
+                          </Button>
+                          <Button
+                            variant={"destructive"}
+                            size={"sm"}
+                            className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem]"
+                            onClick={() => handleDeletePost(post.id)}
+                          >
+                            Delete
+                          </Button>
+                        </div>
+                      ) : null}
                     </div>
                   )) ||
                     (isAdmin && (

@@ -2,7 +2,7 @@ import { Game } from "@/types/game";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import GameEditModal from "@/components/GameEditModal";
 import axios from "axios";
@@ -50,9 +50,7 @@ const GamesContainer: React.FC<GamesContainerProps> = ({ games }) => {
       </Button>
       <Separator className="bg-black w-[16rem] my-10" />
       <div className="flex flex-col">
-        {listGames.map((game, index) => {
-          const isLastGame = index === games.length - 1;
-
+        {listGames.map((game) => {
           return (
             <div key={game.id} className="flex flex-col items-center">
               <div className="flex flex-col items-center gap-5">

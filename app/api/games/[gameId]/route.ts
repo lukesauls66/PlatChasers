@@ -1,6 +1,7 @@
 import prismadb from "@/lib/prismadb";
 import { NextRequest, NextResponse } from "next/server";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import currentUser from "@/app/actions/currentUser";
 
 export async function GET(
   req: NextRequest,
@@ -9,6 +10,8 @@ export async function GET(
   const { gameId } = await params;
 
   try {
+    const user = await currentUser();
+
     const game = await prismadb.game.findUnique({
       where: { id: gameId },
       include: {
@@ -31,6 +34,14 @@ export async function GET(
               },
             },
             achievementPosts: true,
+            unlockedBy: {
+              where: {
+                userId: user?.id,
+              },
+              select: {
+                isUnlocked: true,
+              },
+            },
           },
         },
       },

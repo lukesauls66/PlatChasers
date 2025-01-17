@@ -1,8 +1,8 @@
 export interface AchievementPost {
   id: string;
   body: string;
-  likes: number;
-  dislikes: number;
+  likes?: number;
+  dislikes?: number;
   private: boolean;
   userId: string;
   achievementId: string;
@@ -16,6 +16,9 @@ export interface Achievement {
   description: string;
   image: string;
   isUnlocked: boolean;
+  unlockedBy: {
+    isUnlocked: boolean;
+  }[];
   achievementPosts: AchievementPost[];
   _count: {
     achievementPosts: number;
@@ -25,8 +28,8 @@ export interface Achievement {
 export interface GamePost {
   id: string;
   body: string;
-  likes: number;
-  dislikes: number;
+  likes?: number;
+  dislikes?: number;
   private: boolean;
   userId: string;
   gameId: string;

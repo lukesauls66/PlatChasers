@@ -30,7 +30,7 @@ const FavoritedGames: React.FC<FavoritedGamesProps> = ({ userGames }) => {
       </div>
       <div>
         {isGames ? (
-          <div className="flex flex-col gap-4 pb-2 px-2 w-[100%]">
+          <div className="flex flex-col gap-4 pb-2 px-2 w-[16rem]">
             {sortedGames?.map((game, index) => {
               const isLastGame = index === sortedGames.length - 1;
 
