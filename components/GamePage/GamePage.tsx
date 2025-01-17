@@ -76,17 +76,19 @@ const GamePage: React.FC<GamePageProps> = ({ gameId }) => {
           alt={game?.title}
         />
       </div>
-      <div className="flex items-center">
-        <span
-          onClick={handleFavoriteToggle}
-          className="cursor-pointer text-2xl"
-        >
-          {isFavorited ? <MdFavorite /> : <MdFavoriteBorder />}
-        </span>
-        <span className="ml-2">
-          {isFavorited ? "Favorited" : "Not Favorited"}
-        </span>
-      </div>
+      {session?.user && (
+        <div className="flex items-center">
+          <span
+            onClick={handleFavoriteToggle}
+            className="cursor-pointer text-2xl"
+          >
+            {isFavorited ? <MdFavorite /> : <MdFavoriteBorder />}
+          </span>
+          <span className="ml-2">
+            {isFavorited ? "Favorited" : "Not Favorited"}
+          </span>
+        </div>
+      )}
       <p className="text-center">{game?.description}</p>
       <AchievementsSection game={game} />
       <GamePostsContainer gameId={gameId} game={game} />
