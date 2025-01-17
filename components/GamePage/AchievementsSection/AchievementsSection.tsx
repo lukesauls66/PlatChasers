@@ -115,8 +115,10 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({ game }) => {
                       <img
                         className="w-14 h-14 cursor-pointer"
                         src={
-                          isUnlocked
-                            ? achievement.image
+                          session?.user
+                            ? isUnlocked
+                              ? achievement.image
+                              : "/images/locked-achievement.png"
                             : "/images/locked-achievement.png"
                         }
                         alt={achievement.title}
