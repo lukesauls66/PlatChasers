@@ -7,7 +7,6 @@ export default async function GET() {
     if (!session?.user) {
       return null;
     }
-
     return session.user;
   } catch (error) {
     console.error("Error getting session: ", error);
