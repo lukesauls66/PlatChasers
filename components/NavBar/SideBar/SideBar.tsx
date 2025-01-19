@@ -30,7 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
   return (
     <div>
       <div
-        className={`fixed top-0 right-0 h-full bg-[#c0bfbf] text-[#53285f] text-lg md:text-2xl font-bold transition-transform duration-300 ${
+        className={`fixed top-0 right-0 h-full bg-[#c0bfbf] text-[#53285f] text-lg sm:text-2xl xl:text-3xl font-bold transition-transform duration-300 ${
           isOpen ? "transform translate-x-0" : "transform translate-x-full"
         } w-[11rem] md:w-[280px] py-4 px-2 z-40`}
       >
@@ -70,7 +70,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
             <LogoutButton />
           </div>
         ) : (
-          <div className="flex flex-col gap-[1.5rem] p-[1rem]">
+          <div className="flex flex-col gap-[1.5rem] lg:gap-[3rem] p-[1rem]">
             <button
               onClick={() => {
                 toggleSidebar();
