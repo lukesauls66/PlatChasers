@@ -45,7 +45,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
                   onClick={handleManageGames}
                   variant={"destructive"}
                   size={"sm"}
-                  className="bg-[#ae3634] hover:bg-[#ae3634]/80"
+                  className="bg-[#ae3634] hover:bg-[#ae3634]/80 lg:h-[3rem] lg:text-lg xl:text-lg"
                 >
                   Manage Games
                 </Button>
@@ -53,7 +53,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
                   onClick={handleManageUsers}
                   variant={"destructive"}
                   size={"sm"}
-                  className="bg-[#ae3634] hover:bg-[#ae3634]/80"
+                  className="bg-[#ae3634] hover:bg-[#ae3634]/80 lg:h-[3rem] lg:text-lg xl:text-lg"
                 >
                   Manage Users
                 </Button>

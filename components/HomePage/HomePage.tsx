@@ -52,8 +52,8 @@ const HomePage = () => {
     <div className="pb-8">
       <SearchBar games={games} />
       {status === "authenticated" ? (
-        <div className="flex flex-col items-center gap-4 pt-4">
-          <p className="text-lg font-bold font-it text-center italic">
+        <div className="flex flex-col items-center gap-4 sm:gap-6 md:gap-8 xl:gap-[3rem] pt-4 px-6">
+          <p className="text-lg sm:text-2xl md:text-3xl font-bold font-it text-center italic">
             CHASE YOUR <br /> ACHIEVEMENT GOALS!
           </p>
           <CompletedGames />
@@ -61,8 +61,10 @@ const HomePage = () => {
           <ExploreGames games={games} />
         </div>
       ) : (
-        <div className="flex flex-col items-center gap-6 pt-6">
-          <p className="text-2xl font-bold">Welcome!</p>
+        <div className="flex flex-col items-center gap-6 pt-6 ">
+          <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">
+            Welcome!
+          </p>
           <ExploreGames games={games} />
         </div>
       )}
