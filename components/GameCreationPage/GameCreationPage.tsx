@@ -174,11 +174,11 @@ const GameCreationPage = () => {
   const areAchievements = achievements.length > 0;
 
   return (
-    <div className="flex flex-col items-center py-5 h-[100%] bg-[#e7e7e7]">
-      <h1 className="text-2xl font-bold">Create New Game</h1>
-      <Separator className="mt-5 mb-7 bg-black w-[14rem]" />
-      <div className="flex flex-col items-center gap-8">
-        <div className="flex flex-col items-center gap-.5">
+    <div className="flex flex-col items-center py-5 px-8 h-full bg-[#e7e7e7]">
+      <h1 className="text-2xl lg:text-3xl font-bold">Create New Game</h1>
+      <Separator className="mt-5 mb-7 bg-black w-[14rem] lg:w-[18rem]" />
+      <div className="flex flex-col items-center gap-8 w-full">
+        <div className="flex flex-col items-center gap-.5 w-full">
           <Input
             label="Game Title"
             type="title"
@@ -188,13 +188,13 @@ const GameCreationPage = () => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setTitle(e.target.value)
             }
-            className="w-[16rem] border-[#53285f] border-[2px]"
+            className="w-[16rem] border-[#53285f] border-[3px]"
           />
           {errors?.gameTitle && (
             <p className="text-[#ae3634]">{errors.gameTitle}</p>
           )}
           <textarea
-            className="w-full h-[8rem] p-2 border-2 border-black rounded-md my-2"
+            className="w-[16rem] h-[8rem] p-2 border-2 border-black rounded-md my-2"
             rows={4}
             value={description}
             required
@@ -215,7 +215,7 @@ const GameCreationPage = () => {
             className="bg-white w-[16rem] border-[#53285f] border-[2px]"
           />
         </div>
-        <Separator className="bg-black w-[14rem]" />
+        <Separator className="bg-black w-[14rem] lg:w-[18rem]" />
         {areAchievements && (
           <ul className="">
             {achievements.map((achievement, index) => (

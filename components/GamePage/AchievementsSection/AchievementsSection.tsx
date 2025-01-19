@@ -90,16 +90,18 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({
   const isAdmin = session?.user.isAdmin === true;
 
   return (
-    <div className="flex flex-col gap-4 items-center h-[30rem] w-[16.5rem] rounded-md border-black border-2 bg-white overflow-y-auto">
-      <div className="sticky top-0 flex justify-center bg-[#53285f]/90 mt-2 pt-1 w-60 h-8 rounded-sm">
-        <h1 className="font-semibold text-xl text-[#e7e7e7]">Achievements</h1>
+    <div className="flex flex-col gap-4 items-center h-[30rem] sm:h-[35rem] md:h-[40rem] lg:h-[45rem] w-full max-w-[40rem] rounded-md border-black border-2 bg-white overflow-y-auto">
+      <div className="sticky top-0 flex justify-center bg-[#53285f]/90 pt-1 w-full h-[2rem] xl:h-[2.5rem]">
+        <h1 className="font-semibold text-xl md:text-xl lg:text-2xl xl:text-3xl text-[#e7e7e7]">
+          Achievements
+        </h1>
       </div>
       {isAdmin && (
         <div>
           <Button
             variant={"destructive"}
             size={"lg"}
-            className="bg-[#ae3634] hover:bg-[#ae3634]/80"
+            className="bg-[#ae3634] hover:bg-[#ae3634]/80 md:text-lg"
             onClick={handleModalOpen}
           >
             Add Achievement
@@ -107,7 +109,7 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({
         </div>
       )}
       {areAchievements ? (
-        <div className="flex flex-col items-center gap-4 pb-2 px-2 w-[100%]">
+        <div className="flex flex-col items-center gap-4 pb-2 px-4 w-full">
           {achievements.map((achievement) => {
             const isUnlocked =
               Array.isArray(achievement.unlockedBy) &&
@@ -116,15 +118,15 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({
                 : false;
 
             return (
-              <div key={achievement.id}>
-                <div className="flex flex-col gap-4 bg-[#e7e7e7] p-2 border-black border-2 rounded-sm w-[15.4rem]">
+              <div className="w-full" key={achievement.id}>
+                <div className="flex flex-col gap-4 sm:gap-6 md:gap-8 lg:gap-[3rem] bg-[#e7e7e7] p-2 border-black border-2 rounded-sm w-full">
                   <div>
                     <Link
                       href={`${game?.id}/achievements/${achievement.id}`}
                       className="flex items-center justify-between"
                     >
                       <img
-                        className="w-14 h-14 cursor-pointer"
+                        className="w-[3.5rem] h-[3.5rem] sm:w-[5rem] sm:h-[5rem] md:w-[7rem] md:h-[7rem] xl:w-[9rem] xl:h-[9rem] cursor-pointer"
                         src={
                           session?.user
                             ? isUnlocked
@@ -139,7 +141,7 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({
                         }}
                       />
                       <div className="flex flex-grow items-center justify-center">
-                        <h3 className="text-md text-center font-semibold">
+                        <h3 className="text-md sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-center font-semibold">
                           {achievement.title}
                         </h3>
                       </div>
@@ -147,10 +149,10 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({
                   </div>
                   <div className="flex">
                     <div className="flex flex-col gap-1 bg-[#e7e7e7] px-1 pb-1">
-                      <p className="text-sm font-semibold text-start">
+                      <p className="text-sm sm:text-md md:text-lg xl:text-[1.3rem] font-semibold text-start">
                         Description:
                       </p>
-                      <p className="text-sm text-start">
+                      <p className="text-sm sm:text-md md:text-lg xl:text-[1.3rem] text-start">
                         {achievement.description}
                       </p>
                     </div>
@@ -160,7 +162,7 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({
                       <Button
                         variant={"destructive"}
                         size={"sm"}
-                        className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem]"
+                        className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem] md:w-[7rem] xl:w-[9rem] xl:h-[3rem] md:text-lg xl:text-2xl"
                         onClick={() => {
                           handleModalOpen();
                           setEditingAchievement(achievement);
@@ -171,7 +173,7 @@ const AchievementsSection: React.FC<AchievementsSectionProps> = ({
                       <Button
                         variant={"destructive"}
                         size={"sm"}
-                        className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem]"
+                        className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem] md:w-[7rem] xl:w-[9rem] xl:h-[3rem] md:text-lg xl:text-2xl"
                         onClick={() => handleDeleteAchievement(achievement.id)}
                       >
                         Delete

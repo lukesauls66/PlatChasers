@@ -66,12 +66,12 @@ const GamePage: React.FC<GamePageProps> = ({ gameId }) => {
 
   return (
     <div className="flex flex-col items-center gap-6 p-6 bg-[#e7e7e7]">
-      <h1 className="text-2xl text-center font-bold italic underline underline-offset-8">
+      <h1 className="text-2xl lg:text-3xl xl:text-4xl text-center font-bold italic underline underline-offset-8">
         {game?.title}
       </h1>
       <div className="flex justify-center">
         <img
-          className="w-[10rem] h-[10rem]"
+          className="w-[10rem] h-[10rem] xl:w-[12rem] xl:h-[12rem]"
           src={game?.image}
           alt={game?.title}
         />
@@ -84,14 +84,18 @@ const GamePage: React.FC<GamePageProps> = ({ gameId }) => {
           >
             {isFavorited ? <MdFavorite /> : <MdFavoriteBorder />}
           </span>
-          <span className="ml-2">
+          <span className="ml-2 lg:text-xl xl:text-2xl">
             {isFavorited ? "Favorited" : "Not Favorited"}
           </span>
         </div>
       )}
-      <p className="text-center">{game?.description}</p>
-      <AchievementsSection game={game} isFavorited={isFavorited} />
+      <div className="w-full max-w-[30rem]">
+        <p className="text-center md:text-lg lg:text-[1.3rem]">
+          {game?.description}
+        </p>
+      </div>
       <GamePostsContainer gameId={gameId} game={game} />
+      <AchievementsSection game={game} isFavorited={isFavorited} />
     </div>
   );
 };
