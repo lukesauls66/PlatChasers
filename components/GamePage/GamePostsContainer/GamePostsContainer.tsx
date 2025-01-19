@@ -63,17 +63,19 @@ const GamePostsContainer: React.FC<GamePostsContainerProps> = ({
   const isAdmin = session?.user.isAdmin === true;
 
   return (
-    <div className="flex flex-col gap-4 items-center h-[20rem] w-[16.5rem] rounded-md border-black border-2 bg-white overflow-y-auto">
-      <div className="sticky top-0 flex justify-center bg-[#53285f]/90 mt-2 pt-1 w-60 h-8 rounded-sm">
-        <h1 className="font-semibold text-xl text-[#e7e7e7]">Game Posts</h1>
+    <div className="flex flex-col gap-4 items-center h-[20rem] sm:h-[25rem] md:h-[30rem] w-full max-w-[40rem] rounded-md border-black border-2 bg-white overflow-y-auto">
+      <div className="sticky top-0 flex justify-center bg-[#53285f]/90 pt-1 w-full h-[2rem] xl:h-[2.5rem]">
+        <h1 className="font-semibold text-xl md:text-xl lg:text-2xl xl:text-3xl text-[#e7e7e7]">
+          Game Posts
+        </h1>
       </div>
       {areGamePosts ? (
-        <div className="flex flex-col items-center gap-4 pb-2 px-2 w-[100%]">
+        <div className="flex flex-col items-center gap-4 pb-2 px-4 w-full">
           {session?.user && session?.user.underReview === false ? (
             <Button
               variant={"destructive"}
               size={"lg"}
-              className="bg-[#ae3634] hover:bg-[#ae3634]/80"
+              className="bg-[#ae3634] hover:bg-[#ae3634]/80 md:text-lg"
               onClick={handleModalOpen}
             >
               Post
@@ -85,13 +87,19 @@ const GamePostsContainer: React.FC<GamePostsContainerProps> = ({
             const isOwner = post.userId === session?.user.id;
 
             return (
-              <div key={post.id}>
-                <div className="flex flex-col gap-4 bg-[#e7e7e7] p-3 border-black border-2 rounded-sm w-[15.4rem]">
+              <div className="w-full" key={post.id}>
+                <div className="flex flex-col gap-4 md:gap-8 lg:gap-[3rem] bg-[#e7e7e7] p-3 border-black border-2 rounded-sm w-full">
                   <div className="flex justify-between">
-                    <p className="text-sm font-semibold">Posted by:</p>
-                    <p className="text-sm italic">{post.username}</p>
+                    <p className="text-sm sm:text-md md:text-lg xl:text-[1.3rem] font-semibold">
+                      Posted by:
+                    </p>
+                    <p className="text-sm sm:text-md md:text-lg xl:text-[1.3rem] italic">
+                      {post.username}
+                    </p>
                   </div>
-                  <p className="text-sm">{post.body}</p>
+                  <p className="text-sm sm:text-md md:text-lg xl:text-[1.3rem]">
+                    {post.body}
+                  </p>
                   {(isOwner && (
                     <div>
                       {session?.user.underReview === false ? (
@@ -99,7 +107,7 @@ const GamePostsContainer: React.FC<GamePostsContainerProps> = ({
                           <Button
                             variant={"destructive"}
                             size={"sm"}
-                            className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem]"
+                            className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem] md:w-[7rem] xl:w-[9rem] xl:h-[3rem] md:text-lg xl:text-2xl"
                             onClick={() => {
                               handleModalOpen();
                               setEditingPost(post);
@@ -110,7 +118,7 @@ const GamePostsContainer: React.FC<GamePostsContainerProps> = ({
                           <Button
                             variant={"destructive"}
                             size={"sm"}
-                            className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem]"
+                            className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem] md:w-[7rem] xl:w-[9rem] xl:h-[3rem] md:text-lg xl:text-2xl"
                             onClick={() => handlePostDelete(post.id)}
                           >
                             Delete
@@ -124,7 +132,7 @@ const GamePostsContainer: React.FC<GamePostsContainerProps> = ({
                         <Button
                           variant={"destructive"}
                           size={"sm"}
-                          className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem]"
+                          className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem] md:w-[7rem] xl:w-[9rem] xl:h-[3rem] md:text-lg xl:text-2xl"
                           onClick={() => handlePostDelete(post.id)}
                         >
                           Delete
@@ -140,12 +148,12 @@ const GamePostsContainer: React.FC<GamePostsContainerProps> = ({
       ) : (
         <div>
           {session?.user ? (
-            <div className="flex flex-col gap-6 pt-4">
-              <p className="text-xl italic">Make the First Post</p>
+            <div className="flex flex-col items-center gap-6 pt-4">
+              <p className="text-xl lg:text-2xl italic">Make the First Post</p>
               <Button
                 variant={"destructive"}
                 size={"lg"}
-                className="bg-[#ae3634] hover:bg-[#ae3634]/80"
+                className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem] md:w-[7rem] xl:w-[9rem] xl:h-[3rem] md:text-lg xl:text-2xl"
                 onClick={handleModalOpen}
               >
                 Post

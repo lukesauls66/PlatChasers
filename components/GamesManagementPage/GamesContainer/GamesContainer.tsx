@@ -48,7 +48,7 @@ const GamesContainer: React.FC<GamesContainerProps> = ({ games }) => {
         onClick={handleAddGameClick}
         variant={"destructive"}
         size={"lg"}
-        className="bg-[#ae3634] hover:bg-[#ae3634]/80"
+        className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[5rem] md:w-[7rem] xl:w-[9rem] xl:h-[3rem] md:text-lg xl:text-2xl"
       >
         Add Game
       </Button>
