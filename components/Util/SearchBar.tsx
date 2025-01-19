@@ -51,7 +51,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ games }) => {
           setIsDropdownOpen(true);
         }}
         placeholder="Search Games"
-        className="text-center lg:text-xl xl:text-2xl w-[100vw] px-4 sm:py-4 lg:py-6 xl:py-8 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#53285f]/90"
+        className="text-center lg:text-xl xl:text-2xl w-[100vw] px-4 sm:py-4 xl:py-6 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#53285f]/90"
       />
       {isDropdownOpen && (
         <div className="absolute z-10 w-[100vw] mt-1 bg-white border border-gray-300 rounded-md h-60 lg:h-80 overflow-y-auto shadow-lg">
