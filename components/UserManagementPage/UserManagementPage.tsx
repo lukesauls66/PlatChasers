@@ -55,7 +55,7 @@ const UserManagementPage = () => {
 
   return (
     <div className="h-[100%] bg-[#e7e7e7] flex flex-col gap-10 py-8">
-      <h1 className="text-2xl text-center font-bold italic underline underline-offset-8">
+      <h1 className="text-2xl lg:text-3xl xl:text-4xl text-center font-bold italic underline underline-offset-8">
         Users
       </h1>
       <div className="flex flex-col gap-6">
@@ -66,35 +66,43 @@ const UserManagementPage = () => {
             <div key={user.id} className="flex flex-col items-center gap-6">
               <div className=" flex flex-col gap-4 items-start w-[90%] border-2 border-[#53285f] p-2 bg-white">
                 <div className="flex gap-1">
-                  <p className="font-semibold">{user.firstName}</p>
-                  <p className="font-semibold">{user.lastName}:</p>
+                  <p className="font-semibold md:text-lg lg:text-2xl">
+                    {user.firstName}
+                  </p>
+                  <p className="font-semibold md:text-lg lg:text-2xl">
+                    {user.lastName}:
+                  </p>
                 </div>
-                <div className="flex flex-col justify-between gap-4 w-full">
-                  <p>{user.email}</p>
-                  <p className="text-center flex w-full">
+                <div className="flex flex-col justify-between gap-4 md:gap-6 lg:gap-8 w-full">
+                  <p className=" md:text-lg lg:text-2xl">{user.email}</p>
+                  <p className="text-center flex w-full md:text-lg lg:text-2xl">
                     Num games: <strong>{user.games.length}</strong>
                   </p>
-                  <p className="w-full">
+                  <p className="w-full md:text-lg lg:text-2xl">
                     Num game posts: <strong>{user.gamePosts.length}</strong>
                   </p>
-                  <p className="w-full">
+                  <p className="w-full md:text-lg lg:text-2xl">
                     Num achievement posts:{" "}
                     <strong>{user.achievementPosts.length}</strong>
                   </p>
                   <div className="flex gap-4">
-                    <p>Admin?</p>
-                    <strong>{user.isAdmin ? "Yes" : "No"}</strong>
+                    <p className=" md:text-lg lg:text-2xl">Admin?</p>
+                    <strong className=" md:text-lg lg:text-2xl">
+                      {user.isAdmin ? "Yes" : "No"}
+                    </strong>
                   </div>
                   <div className="flex gap-4">
-                    <p>Under review?</p>
-                    <strong>{user.underReview ? "Yes" : "No"}</strong>
+                    <p className=" md:text-lg lg:text-2xl">Under review?</p>
+                    <strong className=" md:text-lg lg:text-2xl">
+                      {user.underReview ? "Yes" : "No"}
+                    </strong>
                   </div>
                 </div>
-                <div className="flex gap-[1.7rem]">
+                <div className="flex justify-between w-full">
                   <Button
                     variant={"destructive"}
                     size={"sm"}
-                    className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[9rem]"
+                    className="bg-[#ae3634] hover:bg-[#ae3634]/80 w-[9rem] lg:w-[11rem] lg:text-lg"
                     onClick={() => {
                       if (user.id) {
                         handleUnderReview(user.id, user.underReview);
@@ -108,7 +116,7 @@ const UserManagementPage = () => {
                   <Button
                     variant={"destructive"}
                     size={"sm"}
-                    className="bg-[#ae3634] hover:bg-[#ae3634]/80"
+                    className="bg-[#ae3634] hover:bg-[#ae3634]/80 lg:text-lg"
                     onClick={() => {
                       if (user.id) {
                         handleDeleteUser(user.id);
@@ -120,7 +128,11 @@ const UserManagementPage = () => {
                 </div>
               </div>
 
-              {!isLastUser && <Separator className="my-4 bg-black w-[8rem]" />}
+              {!isLastUser && (
+                <div className="flex justify-center w-full px-8 sm:px-[4rem] md:px-[6rem] lg:px-[8rem]">
+                  <Separator className="my-4 bg-black w-full" />
+                </div>
+              )}
             </div>
           );
         })}

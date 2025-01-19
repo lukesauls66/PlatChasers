@@ -18,7 +18,7 @@ const NavBar: React.FC = () => {
         <h1 className="text-[2rem] md:text-4xl lg:text-5xl font-bold text-[#e7e7e7]">
           PlatChasers
         </h1>
-        <GiTrophyCup className="w-8 h-[2rem] text-[#e7e7e7] mb-2" />
+        <GiTrophyCup className="w-8 h-[2rem] lg:h-[3rem] text-[#e7e7e7] mb-2 md:mb-1 lg:md-0 lg:mt-1.5" />
       </Link>
       <div>
         <Hamburger />
