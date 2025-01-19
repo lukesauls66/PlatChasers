@@ -51,22 +51,26 @@ const SearchBar: React.FC<SearchBarProps> = ({ games }) => {
           setIsDropdownOpen(true);
         }}
         placeholder="Search Games"
-        className="text-center w-full px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#53285f]/90"
+        className="text-center lg:text-xl xl:text-2xl w-[100vw] px-4 sm:py-4 lg:py-6 xl:py-8 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#53285f]/90"
       />
       {isDropdownOpen && (
-        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md max-h-60 overflow-y-auto shadow-lg">
+        <div className="absolute z-10 w-[100vw] mt-1 bg-white border border-gray-300 rounded-md h-60 lg:h-80 overflow-y-auto shadow-lg">
           {areGamesToSearch ? (
             filteredGames.map((game) => (
               <div key={game.id}>
                 <Link href={`/games/${game.id}`}>
-                  <div className="px-4 py-2 cursor-pointer hover:bg-gray-100">
-                    <p className="text-center">{game.title}</p>
+                  <div className="px-4 py-2 md:py-4 cursor-pointer hover:bg-gray-100 border-y border-[#333]/20">
+                    <p className="text-center lg:text-xl xl:text-2xl">
+                      {game.title}
+                    </p>
                   </div>
                 </Link>
               </div>
             ))
           ) : (
-            <div className="px-4 py-2 text-gray-500">No games found</div>
+            <div className="text-center w-[100vw] px-4 py-2 text-gray-500">
+              No games found
+            </div>
           )}
         </div>
       )}
