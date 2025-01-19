@@ -87,17 +87,20 @@ const SignupPage: React.FC = () => {
   ]);
 
   return (
-    <div className="flex flex-col gap-2 items-center bg-[#e7e7e7] min-h-screen">
-      <h1 className="text-2xl py-4 font-semibold">Create an Account</h1>
-      <div className="flex flex-col gap-7 items-center">
-        <div className="flex flex-col items-center gap-6">
-          <div className="flex flex-col items-center gap-1">
+    <div className="flex flex-col gap-2 items-center bg-[#e7e7e7] min-h-screen w-full">
+      <h1 className="text-2xl md:text-3xl xl:text-4xl py-4 font-semibold">
+        Create an Account
+      </h1>
+      <div className="flex flex-col gap-7 items-center w-full">
+        <div className="flex flex-col items-center gap-6 w-full">
+          <div className="flex flex-col items-center gap-1 sm:gap-2 md:gap-4 lg:gap-6 w-full">
             <Input
               label="First Name"
               type="firstName"
               id="firstName"
               value={firstName}
               required
+              className="w-full md:text-xl lg:text-2xl"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setFirstName(e.target.value)
               }
@@ -111,6 +114,7 @@ const SignupPage: React.FC = () => {
               id="lastName"
               value={lastName}
               required
+              className="w-full md:text-xl lg:text-2xl"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setLastName(e.target.value)
               }
@@ -124,6 +128,7 @@ const SignupPage: React.FC = () => {
               id="email"
               value={email}
               required
+              className="w-full md:text-xl lg:text-2xl"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setEmail(e.target.value)
               }
@@ -135,6 +140,7 @@ const SignupPage: React.FC = () => {
               id="username"
               value={username}
               required
+              className="w-full md:text-xl lg:text-2xl"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setUsername(e.target.value)
               }
@@ -148,6 +154,7 @@ const SignupPage: React.FC = () => {
               id="password"
               value={password}
               required
+              className="w-full md:text-xl lg:text-2xl"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setPassword(e.target.value)
               }
@@ -161,6 +168,7 @@ const SignupPage: React.FC = () => {
               id="confirmPassword"
               value={confirmPassword}
               required
+              className="w-full md:text-xl lg:text-2xl"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setConfirmPassword(e.target.value)
               }
@@ -175,16 +183,16 @@ const SignupPage: React.FC = () => {
             }}
             variant={"destructive"}
             size={"lg"}
-            className="bg-[#53285f]/90 hover:bg-purple-700/80"
+            className="bg-[#53285f]/90 hover:bg-purple-700/80 md:text-lg"
           >
             Create Account
           </Button>
         </div>
-        <div className="flex flex-col items-center gap-2">
-          <p>Already have an account?</p>
+        <div className="flex flex-col items-center gap-2 sm:gap-3">
+          <p className="sm:text-lg">Already have an account?</p>
           <span
             onClick={() => setVariant("login")}
-            className="hover:underline cursor-pointer font-bold"
+            className="hover:underline cursor-pointer font-bold sm:text-lg"
           >
             Sign in!
           </span>
