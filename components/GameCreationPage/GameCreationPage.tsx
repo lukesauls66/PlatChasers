@@ -188,13 +188,13 @@ const GameCreationPage = () => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setTitle(e.target.value)
             }
-            className="w-[16rem] border-[#53285f] border-[3px]"
+            className="w-[16rem] sm:w-[22.6rem] md:w-[32rem] border-[#53285f] border-[3px]"
           />
           {errors?.gameTitle && (
             <p className="text-[#ae3634]">{errors.gameTitle}</p>
           )}
           <textarea
-            className="w-[16rem] h-[8rem] p-2 border-2 border-black rounded-md my-2"
+            className="w-[16rem] sm:w-[22.6rem] md:w-[32rem] h-[8rem] p-2 border-2 border-black rounded-md my-2"
             rows={4}
             value={description}
             required
@@ -212,24 +212,11 @@ const GameCreationPage = () => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setImage(e.target.files ? e.target.files[0] : null)
             }
-            className="bg-white w-[16rem] border-[#53285f] border-[2px]"
+            className="bg-white w-[16rem] sm:w-[22.6rem] md:w-[32rem] border-[#53285f] border-[2px]"
           />
         </div>
         <Separator className="bg-black w-[14rem] lg:w-[18rem]" />
-        {areAchievements && (
-          <ul className="">
-            {achievements.map((achievement, index) => (
-              <div key={index}>
-                <li key={index} className="flex justify-evenly">
-                  <strong>{achievement.title}</strong>:{" "}
-                  {achievement.description}
-                </li>
-                <Separator className="bg-black w-[14rem] my-4" />
-              </div>
-            ))}
-          </ul>
-        )}
-        <div className="flex flex-col items-center justify-center gap-2 border-black border-[3px] w-[15.5rem] h-[20rem] p-2">
+        <div className="flex flex-col items-center justify-center gap-2 border-black border-[3px] rounded-md w-[15.5rem] sm:w-[22.6rem] md:w-[32rem] h-[20rem] p-2">
           <Input
             label="Achievement Title"
             type="text"
@@ -238,7 +225,7 @@ const GameCreationPage = () => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setNewAchievementTitle(e.target.value)
             }
-            className="w-full border-[#53285f] border-[2px]"
+            className="w-[14.2rem] sm:w-[21.3rem] md:w-[30.7rem] border-[#53285f] border-[2px]"
           />
           {errors?.achievementTitle && (
             <p className="text-[#ae3634]">{errors.achievementTitle}</p>
@@ -260,7 +247,7 @@ const GameCreationPage = () => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setNewAchievementImage(e.target.files ? e.target.files[0] : null)
             }
-            className="bg-white w-full border-[#53285f] border-[2px]"
+            className="bg-white w-full md:w-[30.7rem] border-[#53285f] border-[2px]"
           />
           {errors.achievementForm && (
             <p className="text-[#ae3634]">{errors.achievementForm}</p>
@@ -274,6 +261,24 @@ const GameCreationPage = () => {
             Add Achievement
           </Button>
         </div>
+        {areAchievements && (
+          <ul className="w-[16rem] md:w-[32rem]">
+            {achievements.map((achievement, index) => (
+              <div key={index}>
+                <li
+                  key={index}
+                  className="flex flex-col items-center sm:text-lg md:text-xl lg:text-[1.4rem]"
+                >
+                  <strong className="text-center">{achievement.title}</strong>
+                  <p className="text-center">{achievement.description}</p>
+                </li>
+                <div className="flex justify-center">
+                  <Separator className="bg-black w-[14rem] my-4" />
+                </div>
+              </div>
+            ))}
+          </ul>
+        )}
         <Button
           variant={"destructive"}
           size={"lg"}
