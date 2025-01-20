@@ -76,13 +76,13 @@ const UserManagementPage = () => {
                 <div className="flex flex-col justify-between gap-4 md:gap-6 lg:gap-8 w-full">
                   <p className=" md:text-lg lg:text-2xl">{user.email}</p>
                   <p className="text-center flex w-full md:text-lg lg:text-2xl">
-                    Num games: <strong>{user.games.length}</strong>
+                    # games: <strong>{user.games.length}</strong>
                   </p>
                   <p className="w-full md:text-lg lg:text-2xl">
-                    Num game posts: <strong>{user.gamePosts.length}</strong>
+                    # game posts: <strong>{user.gamePosts.length}</strong>
                   </p>
                   <p className="w-full md:text-lg lg:text-2xl">
-                    Num achievement posts:{" "}
+                    # achievement posts:{" "}
                     <strong>{user.achievementPosts.length}</strong>
                   </p>
                   <div className="flex gap-4">
