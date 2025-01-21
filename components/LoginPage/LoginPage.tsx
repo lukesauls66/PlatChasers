@@ -7,6 +7,7 @@ import { useVariant } from "@/context/Variant";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { FaDiscord } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 
 export const login = async (
@@ -33,6 +34,7 @@ export const login = async (
 };
 
 const LoginPage: React.FC = () => {
+  const router = useRouter();
   const { setVariant } = useVariant();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -168,7 +170,15 @@ const LoginPage: React.FC = () => {
         <div className="flex flex-col items-center gap-.5 sm:gap-1.5">
           <p className="sm:text-lg">Don&apos;t have an account?</p>
           <span
-            onClick={() => setVariant("register")}
+            onClick={
+              () => {
+                history.pushState(null, "", "/?Variant=register");
+                const event = new PopStateEvent("popstate");
+                dispatchEvent(event);
+                router.push("/?Variant=register");
+              }
+              // setVariant("register")
+            }
             className="hover:underline cursor-pointer font-bold sm:text-lg"
           >
             Create an Account

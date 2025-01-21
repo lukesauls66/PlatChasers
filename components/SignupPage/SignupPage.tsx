@@ -5,6 +5,7 @@ import { Input } from "../Util";
 import { login } from "../LoginPage/LoginPage";
 import { useCallback, useState } from "react";
 import { useVariant } from "@/context/Variant";
+import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 
 interface ValidationErrors {
@@ -17,6 +18,7 @@ interface ValidationErrors {
 }
 
 const SignupPage: React.FC = () => {
+  const router = useRouter();
   const { setVariant } = useVariant();
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
@@ -191,7 +193,12 @@ const SignupPage: React.FC = () => {
         <div className="flex flex-col items-center gap-2 sm:gap-3">
           <p className="sm:text-lg">Already have an account?</p>
           <span
-            onClick={() => setVariant("login")}
+            onClick={() => {
+              history.pushState(null, "", "/?Variant=login");
+              const event = new PopStateEvent("popstate");
+              dispatchEvent(event);
+              router.push("/?Variant=login");
+            }}
             className="hover:underline cursor-pointer font-bold sm:text-lg"
           >
             Sign in!
