@@ -89,8 +89,8 @@ const GameEditModal: React.FC<GameEditModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-[#e7e7e7] p-6 rounded-lg shadow-lg w-[18rem]">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 px-5">
+      <div className="bg-[#e7e7e7] p-6 rounded-lg shadow-lg w-full max-w-[30rem]">
         <h1 className="text-xl font-semibold mb-4">Edit Game</h1>
         <Input
           label="Game Title"
