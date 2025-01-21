@@ -170,15 +170,12 @@ const LoginPage: React.FC = () => {
         <div className="flex flex-col items-center gap-.5 sm:gap-1.5">
           <p className="sm:text-lg">Don&apos;t have an account?</p>
           <span
-            onClick={
-              () => {
-                history.pushState(null, "", "/?Variant=register");
-                const event = new PopStateEvent("popstate");
-                dispatchEvent(event);
-                router.push("/?Variant=register");
-              }
-              // setVariant("register")
-            }
+            onClick={() => {
+              history.pushState(null, "", "/?Variant=register");
+              const event = new PopStateEvent("popstate");
+              dispatchEvent(event);
+              router.push("/?Variant=register");
+            }}
             className="hover:underline cursor-pointer font-bold sm:text-lg"
           >
             Create an Account
